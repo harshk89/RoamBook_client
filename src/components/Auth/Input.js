@@ -26,7 +26,6 @@ const Input = ({ half, name, handleChange, label, autoFocus, type, handleShowPas
                 )
             } : null}
             />
-
     </Grid>
   )
 }
