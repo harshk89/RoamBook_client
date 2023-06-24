@@ -1,8 +1,20 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles({
+  card: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    borderRadius: '15px',
+    height: '500px',
+    position: 'relative',
+  },
+  cardContent: {
+    height: "250px",
+    overflowY: "scroll"
+  },
   media: {
-    height: 0,
+    height: "250px",
     paddingTop: '56.25%',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     backgroundBlendMode: 'darken',
@@ -13,18 +25,10 @@ export default makeStyles({
   fullHeightCard: {
     height: '100%',
   },
-  card: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    borderRadius: '15px',
-    height: '100%',
-    position: 'relative',
-  },
   overlay: {
     position: 'absolute',
-    top: '20px',
-    left: '20px',
+    top: '15px',
+    left: '15px',
     color: 'white',
   },
   overlay2: {
