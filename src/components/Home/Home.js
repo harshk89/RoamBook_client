@@ -88,7 +88,7 @@ const Home = () => {
               <Form currentId={currentId} setCurrentId={setCurrentId}/>
 
               {(!searchQuery && !tags.length) && (
-                <Paper classes={classes.pagination} elevation={6}>
+                <Paper classes={classes.pagination} elevation={6} style={{ padding: '10px 0' }}>
                   <Pagination page={page} />
                 </Paper>
               )}

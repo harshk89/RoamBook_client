@@ -16,6 +16,14 @@ export default makeStyles((theme) => ({
     justifyContent: 'center',
   },
   fileInput: {
+    '& input[type="file" i]::-webkit-file-upload-button': {
+      padding: '7px 10px',
+      border: 'none',
+      borderRadius: '5px',
+      color: 'white',
+      fontSize: '1rem',
+      backgroundColor: '#0099ff'
+    },
     width: '97%',
     margin: '10px 0',
   },
