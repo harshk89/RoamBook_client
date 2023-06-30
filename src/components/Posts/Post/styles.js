@@ -7,11 +7,12 @@ export default makeStyles({
     justifyContent: 'space-between',
     borderRadius: '15px',
     height: '500px',
-    position: 'relative',
+    position: 'relative'
   },
   cardContent: {
     height: "250px",
-    overflowY: "scroll"
+    overflowY: "scroll",
+    background: 'linear-gradient(90deg, rgba(251,139,41,1) 0%, rgba(233,46,128,1) 100%)'
   },
   media: {
     height: "250px",
@@ -33,8 +34,8 @@ export default makeStyles({
   },
   overlay2: {
     position: 'absolute',
-    top: '20px',
-    right: '20px',
+    top: '15px',
+    right: '10px',
     color: 'white',
   },
   grid: {
@@ -44,12 +45,13 @@ export default makeStyles({
     display: 'flex',
     justifyContent: 'space-between',
     margin: '20px',
+    background: 'linear-gradient(90deg, rgba(180,58,146,1) 0%, rgba(253,175,29,1) 50%, rgba(75,208,250,1) 100%)'
   },
   title: {
     padding: '0 16px',
   },
   cardActions: {
-    padding: '0 16px 8px 16px',
+    padding: '4px 16px 4px 16px',
     display: 'flex',
     justifyContent: 'space-between',
   },

@@ -66,7 +66,7 @@ const Home = () => {
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
               <AppBar className={classes.appBarSearch} position="static" color="inherit" >
-                <TextField 
+                <TextField className={classes.inputField}
                   name="search" 
                   variant="outlined" 
                   label="Search Memories"
@@ -75,7 +75,7 @@ const Home = () => {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)} 
                 />
-                <ChipInput 
+                <ChipInput className={classes.inputField}
                   style={{margin: '10px 0'}}
                   value = {tags}
                   onAdd={handleAdd}
