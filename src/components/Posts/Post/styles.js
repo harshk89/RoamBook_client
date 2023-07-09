@@ -7,12 +7,18 @@ export default makeStyles({
     justifyContent: 'space-between',
     borderRadius: '15px',
     height: '500px',
-    position: 'relative'
+    position: 'relative',
+    transition: "all 0.2s",
+    '&:hover': {
+      cursor: "pointer",
+      scale: "1.01"
+    }
   },
   cardContent: {
     height: "250px",
     overflowY: "scroll",
-    background: 'linear-gradient(90deg, rgba(251,139,41,1) 0%, rgba(233,46,128,1) 100%)'
+    // background: 'linear-gradient(90deg, rgba(251,139,41,1) 0%, rgba(233,46,128,1) 100%)'
+    backgroundColor: "#fefbd8"
   },
   media: {
     height: "250px",
