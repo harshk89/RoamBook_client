@@ -1,11 +1,20 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
+  paper: {
+    marginLeft: '50px',
+    marginRight: '50px',
+    padding: '20px',
+    borderRadius: '15px',
+    [theme.breakpoints.down('md')]: {
+      marginLeft: '10px',
+      marginRight: '10px',
+    },
+  },
   media: {
     borderRadius: '20px',
-    objectFit: 'cover',
+    objectFit: 'contain',
     width: '100%',
-    maxHeight: '600px',
     // cursor: 'default',
     // '&:hover': {
     //     cursor: 'pointer'
@@ -39,14 +48,14 @@ export default makeStyles((theme) => ({
   loadingPaper: {
     display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px', borderRadius: '15px', height: '39vh',
   },
-  commentsOuterContainer: {
-    display: 'flex',
-    justifyContent: 'space-between'
-  },
-  commentsInnerContainer: {
+  commentsContainer: {
     height: '200px',
-    width: '50%',
+    width: '40vw',
+    [theme.breakpoints.down('sm')]: {
+      width: '70vw'
+    },
     overflowY: 'auto',
-    marginRight: '30px'
+    marginRight: '30px',
+    marginBottom: '20px'
   }
 }));

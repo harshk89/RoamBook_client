@@ -1,6 +1,6 @@
-import { AUTH, LOGOUT } from '../constants/actionTypes';
+import { AUTH, LOGOUT, RESET_PASS_STATUS } from '../constants/actionTypes';
 
-export default (state = { authData: null }, action) => {
+export default (state = { authData: null, passChangeStatus: "notInitiated" }, action) => {
     switch (action.type) {
         case AUTH: 
             localStorage.setItem('profile', JSON.stringify({ ...action.data }));
@@ -10,6 +10,8 @@ export default (state = { authData: null }, action) => {
             localStorage.clear();
 
             return { ...state, authData: null };
+        case RESET_PASS_STATUS:
+            return { ...state, passChangeStatus: action.status };
         default:
             return state;
     }

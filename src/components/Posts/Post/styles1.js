@@ -30,7 +30,6 @@ export default makeStyles ((theme) => ({
         justifyContent: "space-between",
         marginLeft: "10px",
         marginRight: "10px",
-        margin: "0px",
         overflowY: "hidden" 
     }
 }));

@@ -20,7 +20,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { pink, red } from '@mui/material/colors';
 import useStyles from './styles1.js'
 
-const Post1 = ({ post, setCurrentId }) => {
+const Post2 = ({ post }) => {
     const classes = useStyles();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -59,15 +59,6 @@ const Post1 = ({ post, setCurrentId }) => {
                     {post.name.charAt(0)}
                 </Avatar>
                 }
-                // action={
-                //     <IconButton 
-                //         aria-label="edit" 
-                //         onClick={() => {setCurrentId(post._id)}}
-                //         sx={{visibility: `${user?.result?._id === post?.creator ? "visible":"hidden"}`}}
-                //         >
-                //         <EditIcon />
-                //     </IconButton>
-                // }
                 title={post.name}
                 subheader={moment(post.createdAt).fromNow()}
             />
@@ -78,13 +69,13 @@ const Post1 = ({ post, setCurrentId }) => {
                 title={post.title}
                 onClick={openPost}
             />
-            <CardContent onClick={openPost} className={classes.cardContent} >
+            <CardContent onClick={openPost} className={classes.cardContent}>
                 <Typography variant="h6" gutterBottom>{post.title}</Typography>
                 <Typography variant="body2" color="text.secondary">{post.message}</Typography>
                 <Typography variant="caption" color="textSecondary" >{post.tags.map((tag) => `#${tag} `)}</Typography>
             </CardContent>
             <Divider sx={{marginLeft: "10px", marginRight: "10px"}} />
-            <CardActions className={classes.cardActions}  sx={{padding: "0px"}}>
+            <CardActions className={classes.cardActions} sx={{padding: "0px"}}>
                 <IconButton aria-label="Like" disabled={!user?.result} onClick={handleLike}>
                     <Likes />
                 </IconButton>
@@ -98,4 +89,4 @@ const Post1 = ({ post, setCurrentId }) => {
     );
 }
 
-export default Post1;
+export default Post2;

@@ -1,4 +1,4 @@
-import { FETCH_ALL, FETCH_BY_SEARCH, CREATE, UPDATE, DELETE, LIKE, COMMENT, START_LOADING, END_LOADING, FETCH_POST } from '../constants/actionTypes';
+import { FETCH_ALL, FETCH_BY_SEARCH, CREATE, UPDATE, DELETE, LIKE, COMMENT, START_LOADING, END_LOADING, FETCH_POST, FETCH_BY_USERID } from '../constants/actionTypes';
 import * as api from '../api';
 
 //Actions Creators
@@ -24,15 +24,26 @@ export const getPosts = (page) => async (dispatch) => {
     }
 }
 
+export const getPostsByUserId = (id) => async (dispatch) => {
+    try {
+        dispatch({ type: START_LOADING });
+        const { data } = await api.fetchPostsByUserId(id);
+        // console.log(data);
+        dispatch({ type: FETCH_BY_USERID, payload: data});
+        dispatch({ type: END_LOADING });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const getPostsBySearch = (searchQuery) => async (dispatch) => {
     try {
-        console.log(searchQuery);
+        // console.log(searchQuery);
         dispatch({ type: START_LOADING });
         const {data: {data}} = await api.fetchPostsBySearch(searchQuery);
         dispatch({ type: FETCH_BY_SEARCH, payload: data});
         dispatch({ type: END_LOADING });
     } catch (error) {
-        console.log("actions ke andar error");
         console.log(error);
     }
 }

@@ -38,7 +38,7 @@ const PostDetails = () => {
   const recommendedPosts = posts.filter((thispost) => thispost._id !== post._id);
 
   return (
-    <Paper style={{ padding: '20px', borderRadius: '15px' }} elevation={6}>
+    <Paper className={classes.paper} elevation={6}>
       <div className={classes.card}>
         <div className={classes.section}>
           <Typography variant="h3" component="h2">{post.title}</Typography>
@@ -66,9 +66,9 @@ const PostDetails = () => {
                 <div style={{ margin: '20px', cursor: 'pointer'}} onClick={() => openPost(_id)} key={_id}>
                   <Typography gutterBottom variant="h6">{title}</Typography>
                   <Typography gutterBottom variant="subtitle2">{name}</Typography>
-                  <Typography gutterBottom variant="subtitle2">{message}</Typography>
-                  <Typography gutterBottom variant="subtitle1">Likes: {likes.length}</Typography>
-                  <img src={selectedFile} width="200px"/>
+                  {/* <Typography gutterBottom variant="subtitle2">{message}</Typography>
+                  <Typography gutterBottom variant="subtitle1">Likes: {likes.length}</Typography> */}
+                  <img src={selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} width="200px"/>
                 </div>
               )
             })}

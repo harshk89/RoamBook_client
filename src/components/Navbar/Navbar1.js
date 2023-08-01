@@ -5,17 +5,13 @@ import decode from 'jwt-decode';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
+import { Typography , Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
 import roambook_logo from "../../images/roambook_logo.png";
+import useStyles from "./styles1";
 
 const Navbar1 = () => {
 
+    const classes = useStyles();
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const dispatch = useDispatch();
     const location = useLocation();
@@ -40,7 +36,7 @@ const Navbar1 = () => {
     useEffect(() => {
         const token = user?.token;
 
-        //check if token is expired, validity time = 1 hour
+        //check if token is expired, validity time = 10 hour
         if(token) {
             let decodedToken = decode(token);
 
@@ -52,8 +48,8 @@ const Navbar1 = () => {
     }, [location]);
 
     return (
-        <AppBar position="sticky" sx={{ marginBottom: "25px", background: 'linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(250,177,75,1) 100%)'}}>
-            <Container maxWidth="false" sx={{display: 'flex', justifyContent: 'space-between', alignContent: 'center'}}>
+        <AppBar position="sticky" className={classes.appbar} >
+            <Container maxWidth="false" className={classes.containerr} sx={{display: "flex"}}>
                 <Link to='/'><img src={roambook_logo} alt="roambook" height="60" /></Link>
                 {user ? (
                     <Box sx={{ flexGrow: 0, margin: 'auto 0' }}>
@@ -78,10 +74,10 @@ const Navbar1 = () => {
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}
                         >
-                            <MenuItem onClick={handleCloseUserMenu}>
+                            <MenuItem component={Link} to='/profile' onClick={handleCloseUserMenu}>
                                 <Typography textAlign="center">Profile</Typography>
                             </MenuItem>
-                            <MenuItem onClick={handleCloseUserMenu}>
+                            <MenuItem component={Link} to='/account' onClick={handleCloseUserMenu}>
                                 <Typography textAlign="center">Account</Typography>
                             </MenuItem>
                             <MenuItem onClick={handleCloseUserMenu}>
