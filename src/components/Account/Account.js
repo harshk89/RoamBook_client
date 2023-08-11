@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Typography, Divider, Button, TextField, Alert } from '@mui/material';
 import { Grid } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux'
+import { editDetails, updatePassword } from '../../actions/auth';
 import { resetPassStatus } from '../../actions/auth';
 
 import useStyles from './styles';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -12,18 +14,36 @@ const Account = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { passChangeStatus } = useSelector((state) => state.authReducer);
-    const user = useSelector((state) => state.authReducer.authData);
+    const { authData } = useSelector((state) => state.authReducer);
     const [userDetails, setUserDetails] = useState({
-        firstName: user?.result.name.split(' ')[0],
-        lastName: user?.result.name.split(' ')[1],
-        email: user?.result.email
+        firstName: authData?.result.name.split(' ')[0],
+        lastName: authData?.result.name.split(' ')[1],
+        email: authData?.result.email
     });
+    const [editEnabled, setEditEnabled] = useState(false);
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate();
 
+    // useEffect(() => {
+    //     dispatch(getUserDetails());
+    
+    // }, [third])
+    
 
+    const handleEdit = (e) => {
+        e.preventDefault();
+        dispatch(editDetails(userDetails, navigate));
+        setEditEnabled(false);
+    }
 
+    const handleUpdatePass = (e) => {
+        e.preventDefault();
+        const data = {password,newPassword};
+        dispatch(updatePassword(data));
+    }
+    
     return(
         <Container className={classes.mainContainer} sx={{
             width: '50vw',
@@ -33,7 +53,8 @@ const Account = () => {
                 <Typography variant='h4' gutterBottom>Account</Typography>
                 <Divider />
             </div>
-            <form className={classes.details}>
+            {editEnabled ? (
+            <form className={classes.details} onSubmit={handleEdit}>
                 <div className={classes.userDetail} >
                     <Typography variant="body1" gutterBottom sx={{width: "100px"}}>First Name:</Typography>
                     <TextField id="filled-basic" variant="filled" size="small" className={classes.textField} value={userDetails.firstName} onChange={(e) => setUserDetails({ ...userDetails, firstName: e.target.value})} />
@@ -46,13 +67,20 @@ const Account = () => {
                     <Typography variant="body1" gutterBottom sx={{width: "100px"}}>Email:</Typography>
                     <TextField id="filled-read-only-input" variant="filled" size="small" InputProps={{readOnly: true}} className={classes.textField} value={userDetails.email} />
                 </div>
-                {user?.result.name===(userDetails.firstName+" "+userDetails.lastName) ? (
-                <Button disabled variant="contained" sx={{marginTop: "20px", marginBottom: "20px"}}>Edit details</Button>) : (
-                <Button variant="contained" sx={{marginTop: "20px", marginBottom: "20px"}}>Edit details</Button>
+                {authData?.result.name===(userDetails.firstName+" "+userDetails.lastName) ? (
+                <Button disabled variant="contained" sx={{marginTop: "20px", marginBottom: "20px"}}>Submit</Button>) : (
+                <Button variant="contained" type="submit" sx={{marginTop: "20px", marginBottom: "20px"}}>Submit</Button>
                 )}
             </form>
+            ) : (<>
+                <Typography variant="body1" gutterBottom>{`First Name: ${authData?.result.name.split(' ')[0]}`}</Typography>
+                <Typography variant="body1" gutterBottom>{`Last Name: ${authData?.result.name.split(' ')[1]}`}</Typography>
+                <Typography variant="body1" gutterBottom>{`Email: ${authData?.result.email}`}</Typography>
+                <Button variant="contained" onClick={()=>setEditEnabled(true)} sx={{marginTop: "20px", marginBottom: "20px"}}>Update Details</Button>
+                </>
+            )}
             <Divider />
-            <form className={classes.changePass}>
+            <form className={classes.changePass} onSubmit={handleUpdatePass}>
                 <div className={classes.userDetail} >
                     <Typography variant="body1" gutterBottom sx={{width: "180px"}}>Current Password:</Typography>
                     <TextField id="filled-basic" variant="filled" size="small" type='password' className={classes.textField} onChange={(e)=>setPassword(e.target.value)} />
@@ -67,7 +95,7 @@ const Account = () => {
                     (<TextField error id="filled-basic" variant="filled" size="small" type='password' className={classes.textField} onChange={(e)=>setConfirmPassword(e.target.value)} />)}
                 </div>
                 {(password && newPassword.length>=5 && newPassword===confirmPassword) ? (
-                <Button variant="contained" sx={{marginTop: "20px", marginBottom: "20px"}}>Update Password</Button>) : (
+                <Button variant="contained" type="submit" sx={{marginTop: "20px", marginBottom: "20px"}}>Update Password</Button>) : (
                 <Button disabled variant="contained" sx={{marginTop: "20px", marginBottom: "20px"}}>Update Password</Button>
                 )}
             </form>

@@ -1,4 +1,4 @@
-import { FETCH_ALL, FETCH_BY_SEARCH, CREATE, UPDATE, DELETE, LIKE, COMMENT, START_LOADING, END_LOADING, FETCH_POST, FETCH_BY_USERID } from '../constants/actionTypes';
+import { FETCH_ALL, FETCH_BY_SEARCH, CREATE, UPDATE, DELETE, LIKE, COMMENT, START_LOADING, END_LOADING, FETCH_POST, FETCH_BY_USERID, EDIT_DETAILS } from '../constants/actionTypes';
 import * as api from '../api';
 
 //Actions Creators

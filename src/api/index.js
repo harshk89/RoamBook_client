@@ -27,6 +27,8 @@ export const comment = (comment, id) => API.post(`/posts/${id}/commentPost`, { c
 
 export const signIn = (formData) => API.post('/user/signin', formData);
 export const signUp = (formData) => API.post('/user/signup', formData);
+export const editDetails = (userDetails) => API.patch(`/user/editDetails`, userDetails);
+export const updatePassword = (data) => API.patch(`/user/updatePassword`, data);
 
 export const createOrGetUser = async (response) => {
     // console.log(response.credential);
