@@ -8,6 +8,7 @@ import Navbar1 from './components/Navbar/Navbar1';
 import Profile from './components/Profile/Profile';
 import Account from './components/Account/Account';
 import { useSelector } from 'react-redux';
+import LandingPage from './components/LandingPage/LandingPage';
 
 const App = () => {
   const user = useSelector((state) => state.authReducer.authData);
@@ -18,7 +19,7 @@ const App = () => {
           <Navbar1 />
           <Routes>
             {/* <Route path="/" element={<Navigate to="/posts" />} /> */}
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<LandingPage />} />
             <Route path="/posts" element={<Home />} />
             <Route path="/posts/search" element={<Home />} />
             <Route path="/posts/:id" element={<PostDetails />}/>

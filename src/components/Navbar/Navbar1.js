@@ -71,6 +71,9 @@ const Navbar1 = () => {
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}
                         >
+                            <MenuItem component={Link} to='/posts' onClick={handleCloseUserMenu}>
+                                <Typography textAlign="center">Home</Typography>
+                            </MenuItem>
                             <MenuItem component={Link} to='/profile' onClick={handleCloseUserMenu}>
                                 <Typography textAlign="center">Profile</Typography>
                             </MenuItem>
