@@ -2,8 +2,8 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 
 // export const fetchPosts = () => axios.get(url);
-// const url = 'http://localhost:5000'
-const url = 'https://roambookserver.onrender.com';
+const url = 'http://localhost:5000'
+// const url = 'https://roambookserver.onrender.com';
 
 const API = axios.create({ baseURL: url });
 
@@ -29,21 +29,3 @@ export const signIn = (formData) => API.post('/user/signin', formData);
 export const signUp = (formData) => API.post('/user/signup', formData);
 export const editDetails = (userDetails) => API.patch(`/user/editDetails`, userDetails);
 export const updatePassword = (data) => API.patch(`/user/updatePassword`, data);
-
-export const createOrGetUser = async (response) => {
-    // console.log(response.credential);
-    const decoded = jwt_decode(response.credential);
-
-    const { name, email, picture, sub } = decoded;
-
-    const user = {
-        _id: sub,
-        _type: 'user',
-        userName: name,
-        email: email,
-        image: picture
-    }
-    //now create the user similar like signUp
-
-    console.log(user);
-}

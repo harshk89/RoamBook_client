@@ -1,14 +1,18 @@
 import { AUTH, RESET_PASS_STATUS, EDIT_DETAILS, UPDATE_PASSWORD } from '../constants/actionTypes';
 import * as api from '../api';
 
-export const signin = (formData, navigate) => async (dispatch) => {
+export const signin = (formData, setIsWrongPass, navigate) => async (dispatch) => {
     try {
-        const {data} = await api.signIn(formData);
-
+        const response = await api.signIn(formData);
+        
+        const data = response.data;
         dispatch({ type: AUTH, data }); 
 
         navigate("/", {return: true});
     } catch (error) {
+        if(error.response.status==400) {
+            setIsWrongPass("true");
+        }
         console.log(error);
     }
 }

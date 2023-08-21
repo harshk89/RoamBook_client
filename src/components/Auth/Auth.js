@@ -7,10 +7,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Input from './Input'
 import { signin, signup } from '../../actions/auth';
 
-// import { GoogleLogin, googleLogout } from '@react-oauth/google';
-// import { createOrGetUser } from '../../api';
-
-
 const initialState = {firstName: '', lastName: '', email: '', password: '', confirmPassword: ''};
 
 const Auth = () => {
@@ -23,6 +19,7 @@ const Auth = () => {
 
   const [isSignup, setIsSignup] = useState(false);
   const [formData, setFormData] = useState(initialState);
+  const [isWrongPass, setIsWrongPass] = useState(false);
 
   const handleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -35,7 +32,7 @@ const Auth = () => {
     if(isSignup) {
         dispatch(signup(formData, navigate));
     } else {
-        dispatch(signin(formData, navigate));
+        dispatch(signin(formData, setIsWrongPass, navigate));
     }
   }
 
@@ -72,24 +69,13 @@ const Auth = () => {
                         </>)
                     }
                     
-                    <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? "text": "password"} handleShowPassword={handleShowPassword} />
+                    <Input error={isWrongPass} name="password" label="Password" handleChange={handleChange} type={showPassword ? "text": "password"} handleShowPassword={handleShowPassword} />
                     { isSignup && <Input name="confirmPassword" label="Confirm Password" handleChange={handleChange} type="password" />}
                 </Grid>
-                {/* <GoogleLogin clientId="655981911995-pak5jgr4sdoqmem044hhqllsh1cobjkr.apps.googleusercontent.com" /> */}
-
                 
                 <Button type="submit" fullWidth variant='contained' color="primary" className={classes.submit}>
                     {isSignup ? 'Sign Up' : 'Sign In'}
                 </Button>
-
-
-{/*------------------------------ Google Authentication -------------------------------- */}
-                {/* <GoogleLogin 
-                    onSuccess={(response) => createOrGetUser(response)}
-                    onError={() => console.log('Error')}
-                    theme='filled_blue'
-                /> */}
-{/* -------------------------------------------------------------------------------------------- */}
 
                 <Grid container justifyContent='center'>
                     <Grid item>

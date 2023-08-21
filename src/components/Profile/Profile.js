@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Typography, Divider, Avatar } from '@mui/material';
 import { Grid, CircularProgress } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux'
@@ -12,7 +12,8 @@ const Profile = () => {
     const classes = useStyles();
     const { posts, isLoading } = useSelector((state) => state.posts);
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.authReducer.authData);
+    // const user = useSelector((state) => state.authReducer.authData);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
     useEffect(() => {
       if(user) {
@@ -25,9 +26,9 @@ const Profile = () => {
             <Container className={classes.header} sx={{display: 'flex'}}>
                 <Avatar alt="profile_pic" src={no_profile} sx={{ width: 100, height: 100 }}/>
                 <Container>
-                    <Typography variant="h5">Harsh Kesarwani</Typography>
+                    <Typography variant="h5">{user?.result?.name}</Typography>
                     {/* <Typography gutterBottom>Bio</Typography> */}
-                    <Typography><strong>Posts: </strong>{posts.length}</Typography>
+                    <Typography><strong>Posts: </strong>{isLoading ? "-":posts.length}</Typography>
                 </Container>
             </Container>
             <Divider />

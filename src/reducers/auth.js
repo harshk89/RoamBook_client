@@ -4,7 +4,6 @@ export default (state = { authData: null, passChangeStatus: "notInitiated" }, ac
     switch (action.type) {
         case AUTH: 
             localStorage.setItem('profile', JSON.stringify({ ...action.data }));
-
             return { ...state, authData: action.data };
 
         case LOGOUT:
@@ -13,7 +12,8 @@ export default (state = { authData: null, passChangeStatus: "notInitiated" }, ac
             return { ...state, authData: null };
 
         case EDIT_DETAILS: 
-            return {...state, authData: action.data };
+            localStorage.setItem('profile', JSON.stringify({ ...action.data }));
+            return { ...state, authData: action.data };
 
         case RESET_PASS_STATUS:
             return { ...state, passChangeStatus: action.status };

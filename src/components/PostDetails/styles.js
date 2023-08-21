@@ -46,7 +46,19 @@ export default makeStyles((theme) => ({
     },
   },
   loadingPaper: {
-    display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px', borderRadius: '15px', height: '39vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '20px',
+    marginLeft: '50px',
+    marginRight: '50px',
+    borderRadius: '15px',
+    height: '39vh',
+    [theme.breakpoints.down('md')]: {
+      marginLeft: '10px',
+      marginRight: '10px',
+    },
+
   },
   commentsContainer: {
     height: '200px',

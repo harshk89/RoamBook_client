@@ -14,11 +14,12 @@ const Account = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { passChangeStatus } = useSelector((state) => state.authReducer);
-    const { authData } = useSelector((state) => state.authReducer);
+    // const { authData } = useSelector((state) => state.authReducer);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const [userDetails, setUserDetails] = useState({
-        firstName: authData?.result.name.split(' ')[0],
-        lastName: authData?.result.name.split(' ')[1],
-        email: authData?.result.email
+        firstName: user?.result?.name.split(' ')[0],
+        lastName: user?.result?.name.split(' ')[1],
+        email: user?.result?.email
     });
     const [editEnabled, setEditEnabled] = useState(false);
     const [password, setPassword] = useState('');
@@ -67,15 +68,15 @@ const Account = () => {
                     <Typography variant="body1" gutterBottom sx={{width: "100px"}}>Email:</Typography>
                     <TextField id="filled-read-only-input" variant="filled" size="small" InputProps={{readOnly: true}} className={classes.textField} value={userDetails.email} />
                 </div>
-                {authData?.result.name===(userDetails.firstName+" "+userDetails.lastName) ? (
+                {user?.result?.name===(userDetails.firstName+" "+userDetails.lastName) ? (
                 <Button disabled variant="contained" sx={{marginTop: "20px", marginBottom: "20px"}}>Submit</Button>) : (
                 <Button variant="contained" type="submit" sx={{marginTop: "20px", marginBottom: "20px"}}>Submit</Button>
                 )}
             </form>
             ) : (<>
-                <Typography variant="body1" gutterBottom>{`First Name: ${authData?.result.name.split(' ')[0]}`}</Typography>
-                <Typography variant="body1" gutterBottom>{`Last Name: ${authData?.result.name.split(' ')[1]}`}</Typography>
-                <Typography variant="body1" gutterBottom>{`Email: ${authData?.result.email}`}</Typography>
+                <Typography variant="body1" gutterBottom>{`First Name: ${user?.result?.name.split(' ')[0]}`}</Typography>
+                <Typography variant="body1" gutterBottom>{`Last Name: ${user?.result?.name.split(' ')[1]}`}</Typography>
+                <Typography variant="body1" gutterBottom>{`Email: ${user?.result?.email}`}</Typography>
                 <Button variant="contained" onClick={()=>setEditEnabled(true)} sx={{marginTop: "20px", marginBottom: "20px"}}>Update Details</Button>
                 </>
             )}
@@ -99,8 +100,8 @@ const Account = () => {
                 <Button disabled variant="contained" sx={{marginTop: "20px", marginBottom: "20px"}}>Update Password</Button>
                 )}
             </form>
-            {(passChangeStatus==="successful") && (<Alert onClose={()=>{}} severity="success">Password successfully change!</Alert>)}
-            {(passChangeStatus==="failed") && (<Alert onClose={()=>{}} severity="error">Password not changed - incorrect password!</Alert>)}
+            {(passChangeStatus==="successful") && (<Alert onClose={()=>{dispatch(resetPassStatus())}} severity="success">Password successfully change!</Alert>)}
+            {(passChangeStatus==="failed") && (<Alert onClose={()=>{dispatch(resetPassStatus())}} severity="error">Password not changed - incorrect password!</Alert>)}
 
         </Container>
     )

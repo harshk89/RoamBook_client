@@ -14,7 +14,8 @@ const Form = ({ currentId, setCurrentId}) => {
   const post = useSelector((state) => currentId ? state.posts.posts.find((p) => p._id === currentId) : null);
   const classes = useStyles();
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.authReducer.authData);
+  // const user = useSelector((state) => state.authReducer.authData);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
   const navigate = useNavigate();
 
   useEffect(() => {
