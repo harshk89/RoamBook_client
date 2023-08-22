@@ -47,7 +47,7 @@ const Navbar1 = () => {
     return (
         <AppBar position="sticky" className={classes.appbar} >
             <div maxWidth="false" className={classes.containerr} >
-                <Link to='/posts'><img src={roambook_logo} alt="roambook" height="60px" /></Link>
+                <Link to='/'><img src={roambook_logo} alt="roambook" height="60px" /></Link>
                 {user ? (
                     <Box sx={{ flexGrow: 0, margin: 'auto 0' }}>
                         <Tooltip title="Open settings">
