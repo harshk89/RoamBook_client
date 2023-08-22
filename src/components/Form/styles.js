@@ -9,7 +9,7 @@ export default makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     marginBottom: '1rem',
-    background: 'linear-gradient(90deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%)' 
+    background: 'linear-gradient(90deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%)'
   },
   form: {
     display: 'flex',
@@ -34,5 +34,10 @@ export default makeStyles((theme) => ({
   },
   buttonSubmit: {
     marginBottom: 10,
+  },
+  toggleButton: {
+    margin:"auto",
+    width: "100%",
+    fontSize: "1rem",
   },
 }));

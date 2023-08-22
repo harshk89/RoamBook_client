@@ -8,7 +8,8 @@ export default makeStyles ((theme) => ({
     containerr: {
         display: 'flex',
         justifyContent: 'space-between',
-        alignContent: 'center'
+        alignContent: 'center',
+        margin: "auto 30px",
     },
 
 

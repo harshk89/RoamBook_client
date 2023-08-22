@@ -7,6 +7,7 @@ import no_profile from "../../images/no_profile.png";
 import Post2 from '../Posts/Post/Post2';
 import { getPostsByUserId } from '../../actions/posts';
 import useStyles from './style';
+import Form from '../Form/Form';
 
 const Profile = () => {
     const classes = useStyles();
@@ -14,6 +15,7 @@ const Profile = () => {
     const dispatch = useDispatch();
     // const user = useSelector((state) => state.authReducer.authData);
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    const [currentId, setCurrentId] = useState(null);
 
     useEffect(() => {
       if(user) {
@@ -32,7 +34,12 @@ const Profile = () => {
                 </Container>
             </Container>
             <Divider />
-            <Container sx={{marginTop: "40px"}}>
+
+            <div style={{margin: "20px auto", maxWidth: "500px"}}>
+              <Form currentId={currentId} setCurrentId={setCurrentId}/>
+            </div>
+
+            <div style={{marginTop: "40px" }} >
                 {(!posts.length && !isLoading) ? 'No Posts': (
                     isLoading ? <CircularProgress /> : (
                         <Grid container alignItems='stretch' spacing={3}>
@@ -44,7 +51,7 @@ const Profile = () => {
                         </Grid>
                       )
                 )}
-            </Container>
+            </div>
             
         </Container>
     )

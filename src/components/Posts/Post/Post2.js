@@ -24,7 +24,8 @@ const Post2 = ({ post }) => {
     const classes = useStyles();
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.authReducer.authData);
+    // const user = useSelector((state) => state.authReducer.authData);
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const [likes, setLikes] = useState(post?.likes);
 
     const userId = user?.result?._id;

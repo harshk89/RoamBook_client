@@ -6,6 +6,7 @@ import useStyles from './styles';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Input from './Input'
 import { signin, signup } from '../../actions/auth';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const initialState = {firstName: '', lastName: '', email: '', password: '', confirmPassword: ''};
 
@@ -21,6 +22,8 @@ const Auth = () => {
   const [formData, setFormData] = useState(initialState);
   const [isWrongPass, setIsWrongPass] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const handleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   }
@@ -29,10 +32,11 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(formData);
+    setLoading(true);
     if(isSignup) {
-        dispatch(signup(formData, navigate));
+        dispatch(signup(formData, setLoading, navigate));
     } else {
-        dispatch(signin(formData, setIsWrongPass, navigate));
+        dispatch(signin(formData, setIsWrongPass, setLoading, navigate));
     }
   }
 
@@ -72,10 +76,14 @@ const Auth = () => {
                     <Input error={isWrongPass} name="password" label="Password" handleChange={handleChange} type={showPassword ? "text": "password"} handleShowPassword={handleShowPassword} />
                     { isSignup && <Input name="confirmPassword" label="Confirm Password" handleChange={handleChange} type="password" />}
                 </Grid>
-                
-                <Button type="submit" fullWidth variant='contained' color="primary" className={classes.submit}>
+
+                <LoadingButton size="large" type="submit" fullWidth loading={loading} variant="contained" sx={{marginTop: "15px"}}>
                     {isSignup ? 'Sign Up' : 'Sign In'}
-                </Button>
+                </LoadingButton>
+                
+                {/* <Button type="submit" fullWidth variant='contained' color="primary" className={classes.submit}>
+                    {isSignup ? 'Sign Up' : 'Sign In'}
+                </Button> */}
 
                 <Grid container justifyContent='center'>
                     <Grid item>

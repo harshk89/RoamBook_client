@@ -46,8 +46,8 @@ const Navbar1 = () => {
 
     return (
         <AppBar position="sticky" className={classes.appbar} >
-            <Container maxWidth="false" className={classes.containerr} sx={{display: "flex"}}>
-                <Link to='/'><img src={roambook_logo} alt="roambook" height="60" /></Link>
+            <div maxWidth="false" className={classes.containerr} >
+                <Link to='/posts'><img src={roambook_logo} alt="roambook" height="60px" /></Link>
                 {user ? (
                     <Box sx={{ flexGrow: 0, margin: 'auto 0' }}>
                         <Tooltip title="Open settings">
@@ -88,7 +88,7 @@ const Navbar1 = () => {
                 ) : (
                     <Button sx={{ flexGrow: 0, margin: 'auto 0' }} component={Link} to="/auth" variant="contained" color="primary">Sign In</Button>
                 )}
-            </Container>
+            </div>
         </AppBar>
     )
 }

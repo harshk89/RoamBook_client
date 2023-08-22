@@ -14,7 +14,7 @@ const Posts = ({ setCurrentId }) => {
     return 'No Posts';
 
   return (
-    isLoading ? (<div style={{marginLeft: '48%'}}><CircularProgress /></div>) : (
+    isLoading ? (<div style={{marginLeft: '48%', marginBottom: "80vh"}}><CircularProgress /></div>) : (
       <Grid className={classes.container} container alignItems='stretch' spacing={3}>
         {posts.map((post) => (
           <Grid key={post._id} item xs={12} sm={12} md={6} lg={4}>

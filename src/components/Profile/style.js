@@ -2,7 +2,7 @@ import { makeStyles } from "@mui/styles";
 
 export default makeStyles ((theme) => ({
     mainContainer: {
-        background: 'white',
+        background: "#ffcbcb",
         borderRadius: '8px',
         padding: '20px',
     },

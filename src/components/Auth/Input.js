@@ -29,6 +29,7 @@ const Input = ({ error=false, half, name, handleChange, label, autoFocus, type, 
             /> : 
             <TextField 
                 error
+                helperText="Username and password does not match!"
                 name={name} 
                 onChange={handleChange} 
                 variant='outlined' 

@@ -6,7 +6,7 @@ import ChipInput from 'material-ui-chip-input';
 
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getPostsBySearch } from '../../actions/posts';
 import useStyles from './styles.js'
 import Pagination from "../Pagination";
@@ -25,6 +25,7 @@ const Home = () => {
   const searchQuery = query.get('searchQuery');
   const [search, setSearch] = useState('');
   const [tags, setTags] = useState([]);
+  const { isLoading} = useSelector((state) => state.posts);
 
   // useEffect(() => {
   //   dispatch(getPosts());
@@ -87,13 +88,14 @@ const Home = () => {
               </AppBar>
               <Form currentId={currentId} setCurrentId={setCurrentId}/>
 
-              {(!searchQuery && !tags.length) && (
-                <Paper classes={classes.pagination} elevation={6} style={{ padding: '10px 0' }}>
-                  <Pagination page={page} />
-                </Paper>
-              )}
+              
             </Grid>
           </Grid>
+          {(!searchQuery && !tags.length) && (
+            <Paper classes={classes.pagination} elevation={6} style={{ maxWidth: "800px", margin: "30px auto 10px auto", padding: '10px 0' }}>
+              <Pagination page={page} />
+            </Paper>
+          )}
         </Container>
       </Grow>
   )
