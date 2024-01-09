@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core';
 import useStyles from './styles';
@@ -80,6 +80,8 @@ const Auth = () => {
                 <LoadingButton size="large" type="submit" fullWidth loading={loading} variant="contained" sx={{marginTop: "15px"}}>
                     {isSignup ? 'Sign Up' : 'Sign In'}
                 </LoadingButton>
+
+                <Button component={Link} to="/posts" variant="outlined" fullWidth color="primary" size="large" style={{marginTop: "15px"}}>Continue without signing in</Button>
                 
                 {/* <Button type="submit" fullWidth variant='contained' color="primary" className={classes.submit}>
                     {isSignup ? 'Sign Up' : 'Sign In'}

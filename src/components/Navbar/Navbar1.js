@@ -4,11 +4,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import decode from 'jwt-decode';
 import { AppBar, Box, IconButton, Typography , Menu, Container, Avatar, Button, Tooltip, MenuItem } from '@mui/material';
 import roambook_logo from "../../images/roambook_logo.png";
-import useStyles from "./styles1";
+// import useStyles from "./styles1";
 
 const Navbar1 = () => {
 
-    const classes = useStyles();
+    // const classes = useStyles();
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const dispatch = useDispatch();
     const location = useLocation();
@@ -44,9 +44,14 @@ const Navbar1 = () => {
         setUser(JSON.parse(localStorage.getItem('profile')));
     }, [location]);
 
+    const appBarStyles = {
+        marginBottom: "25px",
+        background: "linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,29,1) 50%, rgba(250,177,75,1) 100%)"
+    }
+
     return (
-        <AppBar position="sticky" className={classes.appbar} >
-            <div maxWidth="false" className={classes.containerr} >
+        <AppBar position="sticky" sx={appBarStyles} >
+            <div maxWidth="false" style={{display: "flex", justifyContent: "space-between", margin: "auto 30px"}} >
                 <Link to='/'><img src={roambook_logo} alt="roambook" height="60px" /></Link>
                 {user ? (
                     <Box sx={{ flexGrow: 0, margin: 'auto 0' }}>
@@ -86,7 +91,7 @@ const Navbar1 = () => {
                         </Menu>
                     </Box>
                 ) : (
-                    <Button sx={{ flexGrow: 0, margin: 'auto 0' }} component={Link} to="/auth" variant="contained" color="primary">Sign In</Button>
+                    <Button style={{ margin: "8px 0px" }} component={Link} to="/auth" variant="contained" color="primary">Sign In</Button>
                 )}
             </div>
         </AppBar>
