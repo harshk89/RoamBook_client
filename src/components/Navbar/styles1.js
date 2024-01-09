@@ -11,6 +11,4 @@ export default makeStyles ((theme) => ({
         alignContent: 'center',
         margin: "auto 30px",
     },
-
-
 }));

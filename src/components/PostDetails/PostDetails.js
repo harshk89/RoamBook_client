@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Paper, Typography, CircularProgress, Divider } from '@material-ui/core';
+import { Paper, Typography, CircularProgress, Divider, Button } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';  //moment is js library that deals with time
 import { useParams, useNavigate } from 'react-router-dom';
@@ -33,6 +33,10 @@ const PostDetails = () => {
     </Paper>)
   }
 
+  const goBack = () => {
+    navigate(-1);
+  }
+
   const openPost = (_id) => navigate(`/posts/${_id}`);
 
   const recommendedPosts = posts.filter((thispost) => thispost._id !== post._id);
@@ -42,14 +46,16 @@ const PostDetails = () => {
   return (
     <Paper className={classes.paper} elevation={6}>
       <div className={classes.card}>
+        <Button variant='outlined' onClick={goBack} style={{marginBottom: "10px"}}>Go back</Button>
         <div className={classes.imageSection}>
           <img className={classes.media} src={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} alt={post.title} />
         </div>
+        <Divider />
         <div className={classes.section}>
-          <Typography variant="h4" component="h2">{post.title}</Typography>
-          <Typography gutterBottom variant="body1" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
-          <Typography gutterBottom variant="body1" component="p">{post.message}</Typography>
-          <Typography variant="h6">Created by: {post.name}</Typography>
+          <Typography variant="h5">{post.title}</Typography>
+          <Typography gutterBottom variant="body1" color="textSecondary">{post.tags.map((tag) => `#${tag} `)}</Typography>
+          <Typography gutterBottom variant="body1">{post.message}</Typography>
+          <Typography variant="body1">Created by: {post.name}</Typography>
           <Typography variant="body1">{moment(post.createdAt).fromNow()}</Typography>
           <Divider style={{ margin: '20px 0' }} />
           <CommentSection post={post} />

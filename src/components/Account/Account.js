@@ -10,12 +10,12 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const Account = () => {
+const Account = ({ user, setUser }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { passChangeStatus } = useSelector((state) => state.authReducer);
     // const { authData } = useSelector((state) => state.authReducer);
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const [userDetails, setUserDetails] = useState({
         firstName: user?.result?.name.split(' ')[0],
         lastName: user?.result?.name.split(' ')[1],
@@ -35,14 +35,14 @@ const Account = () => {
 
     const handleEdit = (e) => {
         e.preventDefault();
-        dispatch(editDetails(userDetails, navigate));
+        dispatch(editDetails(userDetails, navigate, setUser));
         setEditEnabled(false);
     }
 
     const handleUpdatePass = (e) => {
         e.preventDefault();
         const data = {password,newPassword};
-        dispatch(updatePassword(data));
+        dispatch(updatePassword(data, setUser));
     }
     
     return(

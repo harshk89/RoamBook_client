@@ -10,7 +10,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 
 const initialState = {firstName: '', lastName: '', email: '', password: '', confirmPassword: ''};
 
-const Auth = () => {
+const Auth = ({ user, setUser }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -34,9 +34,9 @@ const Auth = () => {
     // console.log(formData);
     setLoading(true);
     if(isSignup) {
-        dispatch(signup(formData, setLoading, navigate));
+        dispatch(signup(formData, setLoading, navigate, setUser));
     } else {
-        dispatch(signin(formData, setIsWrongPass, setLoading, navigate));
+        dispatch(signin(formData, setIsWrongPass, setLoading, navigate, setUser));
     }
   }
 
@@ -77,7 +77,7 @@ const Auth = () => {
                     { isSignup && <Input name="confirmPassword" label="Confirm Password" handleChange={handleChange} type="password" />}
                 </Grid>
 
-                <LoadingButton size="large" type="submit" fullWidth loading={loading} variant="contained" sx={{marginTop: "15px"}}>
+                <LoadingButton size="large" type="submit" fullWidth loading={loading} variant="contained" style={{marginTop: "15px"}}>
                     {isSignup ? 'Sign Up' : 'Sign In'}
                 </LoadingButton>
 

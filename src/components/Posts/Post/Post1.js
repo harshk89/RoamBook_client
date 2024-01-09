@@ -20,12 +20,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import { pink, red } from '@mui/material/colors';
 import useStyles from './styles1.js'
 
-const Post1 = ({ post, setCurrentId }) => {
+const Post1 = ({ post, setCurrentId, user, setUser }) => {
     const classes = useStyles();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     // const user = useSelector((state) => state.authReducer.authData);
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const [likes, setLikes] = useState(post?.likes);
 
     const userId = user?.result?._id;

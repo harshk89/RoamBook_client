@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   paper: {
     // background: "linear-gradient(90deg, rgba(255,196,196,1) 21%, rgba(255,219,193,1) 71%)",
-    background: "#ffcbcb",
+    // background: "#ffcbcb",
+    background: "#f2f2f2",
     margin: "auto",
     padding: '20px',
     borderRadius: '20px',
@@ -16,7 +17,7 @@ export default makeStyles((theme) => ({
     margin: "auto",
     borderRadius: '20px',
     objectFit: 'contain',
-    maxHeight: '800px',
+    maxHeight: '500px',
     width: "100%",
     // cursor: 'default',
     // '&:hover': {

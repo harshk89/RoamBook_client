@@ -9,12 +9,12 @@ import { getPostsByUserId } from '../../actions/posts';
 import useStyles from './style';
 import Form from '../Form/Form';
 
-const Profile = () => {
+const Profile = ({ user, setUser }) => {
     const classes = useStyles();
     const { posts, isLoading } = useSelector((state) => state.posts);
     const dispatch = useDispatch();
     // const user = useSelector((state) => state.authReducer.authData);
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const [currentId, setCurrentId] = useState(null);
 
     useEffect(() => {

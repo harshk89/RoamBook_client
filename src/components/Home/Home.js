@@ -15,7 +15,7 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const Home = () => {
+const Home = ({ user, setUser }) => {
   const [currentId, setCurrentId] = useState(null);
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -24,8 +24,9 @@ const Home = () => {
   const page = query.get('page') || 1;
   const searchQuery = query.get('searchQuery');
   const [search, setSearch] = useState('');
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState('');
   const { isLoading} = useSelector((state) => state.posts);
+  // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
   // useEffect(() => {
   //   dispatch(getPosts());
@@ -40,21 +41,33 @@ const Home = () => {
     }
   }
 
-  const handleAdd = (tag) => {
-    setTags([...tags, tag]);
-  }
+  // const handleAdd = (tag) => {
+  //   setTags([...tags, tag]);
+  // }
 
-  const handleDelete = (tagToDelete) => {
-    setTags(tags.filter((tag) => tag!==tagToDelete));
-  }
+  // const handleDelete = (tagToDelete) => {
+  //   setTags(tags.filter((tag) => tag!==tagToDelete));
+  // }
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+
+    // regular expression to match only alphabets, digits and commas
+    const validInput = /^[0-9a-zA-Z,]*$/.test(inputValue);
+
+    if (validInput || inputValue === '') {
+      setTags(inputValue);
+    }
+  };
 
   const searchPost = () => {
     if(search.trim() || tags) {
-      dispatch(getPostsBySearch({search, tags: tags.join(',')}));
-      navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
+      // console.log(tags);
+      dispatch(getPostsBySearch({search, tags}));
+      // navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags || 'none'}`);
     }
     else {
-      navigate('/');
+      navigate('/posts');
     }
   }
 
@@ -63,7 +76,7 @@ const Home = () => {
         <Container maxWidth="xl">
           <Grid container className={classes.gridContainer} justifyContent="space-between" alignItems="stretch" spacing={3}>
             <Grid item xs={12} sm={6} md={9}>
-              <Posts setCurrentId={setCurrentId}/>
+              <Posts setCurrentId={setCurrentId} user={user} setUser={setUser} />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
               <AppBar className={classes.appBarSearch} position="static" color="inherit" >
@@ -74,16 +87,27 @@ const Home = () => {
                   onKeyPress={handleKeyPress}
                   fullWidth
                   value={search}
-                  onChange={(e) => setSearch(e.target.value)} 
+                  onChange={(e) => setSearch(e.target.value)}
+                  style={{marginBottom: "10px"}}
                 />
-                <ChipInput className={classes.inputField}
+                <TextField className={classes.inputField}
+                  name="tags" 
+                  variant="outlined" 
+                  label="Enter comma separated tags"
+                  onKeyPress={handleKeyPress}
+                  fullWidth
+                  value={tags}
+                  onChange={handleInputChange}
+                  style={{marginBottom: "10px"}}
+                />
+                {/* <ChipInput className={classes.inputField}
                   style={{margin: '10px 0'}}
                   value = {tags}
                   onAdd={handleAdd}
                   onDelete={handleDelete}
                   label="Search Tags"
                   variant="outlined"
-                />
+                /> */}
                 <Button onClick={searchPost} className={classes.searchButton} variant="contained" color="primary">Search</Button>
               </AppBar>
               <Form currentId={currentId} setCurrentId={setCurrentId}/>

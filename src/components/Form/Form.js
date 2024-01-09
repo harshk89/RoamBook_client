@@ -56,6 +56,18 @@ const Form = ({ currentId, setCurrentId}) => {
     setExpandForm(!expandForm);
   }
 
+  const handleTagsInput = (e) => {
+    const inputValue = e.target.value;
+
+    // regular expression to match only alphabets, digits and commas
+    const validInput = /^[0-9a-zA-Z,]*$/.test(inputValue);
+
+    if (validInput || inputValue === '') {
+      // setTags(inputValue);
+      setPostData({ ...postData, tags: inputValue })
+    }
+  };
+
   return (
     <Paper className={classes.paper} elevation={6}>
       <Button onClick={toggleForm} className={classes.toggleButton}>{`${currentId ? 'Editing Memory' : 'Create new Memory'}`} {expandForm ? <ExpandLessIcon/>:<ExpandMoreIcon/>}</Button>
@@ -64,7 +76,7 @@ const Form = ({ currentId, setCurrentId}) => {
         {/* <Typography variant="h6">{`${currentId ? 'Editing Memory' : 'Create new Memory'}`}</Typography> */}
         <TextField name="title" variant="outlined" className={classes.textField} placeholder='title' fullWidth value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value})} />
         <TextField name="message" variant="outlined" className={classes.textField} placeholder="Message" fullWidth value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value})} />
-        <TextField name="tags" variant="outlined" className={classes.textField} label="Tags" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',')})} />
+        <TextField name="tags" variant="outlined" className={classes.textField} label="Comma separated tags" fullWidth value={postData.tags} onChange={handleTagsInput} />
         <div className={classes.fileInput}>
           <FileBase type="file" multiple={false} onDone={({base64}) => {setPostData({ ...postData, selectedFile: base64})}} />
         </div>

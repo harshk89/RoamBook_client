@@ -1,14 +1,15 @@
 import { AUTH, RESET_PASS_STATUS, EDIT_DETAILS, UPDATE_PASSWORD } from '../constants/actionTypes';
 import * as api from '../api';
 
-export const signin = (formData, setIsWrongPass, setLoading, navigate) => async (dispatch) => {
+export const signin = (formData, setIsWrongPass, setLoading, navigate, setUser) => async (dispatch) => {
     try {
         const response = await api.signIn(formData);
         
         const data = response.data;
+        setUser(data);
         dispatch({ type: AUTH, data }); 
         setLoading(false);
-        navigate("/", {return: true});
+        navigate("/posts", {return: true});
     } catch (error) {
         if(error.response.status==400) {
             setLoading(false);
@@ -18,12 +19,13 @@ export const signin = (formData, setIsWrongPass, setLoading, navigate) => async 
     }
 }
 
-export const signup = (formData, setLoading, navigate) => async (dispatch) => {
+export const signup = (formData, setLoading, navigate, setUser) => async (dispatch) => {
     try {
         const { data } = await api.signUp(formData);
 
         // console.log("in actions/auth data received", data);
 
+        setUser(data);
         dispatch({ type: AUTH, data });
         setLoading(false);
 
@@ -38,9 +40,10 @@ export const resetPassStatus = () => async (dispatch) => {
     dispatch({ type: RESET_PASS_STATUS, status });
 }
 
-export const editDetails = (userDetails, navigate) => async(dispatch) => {
+export const editDetails = (userDetails, navigate, setUser) => async(dispatch) => {
     try {
         const { data } = await api.editDetails(userDetails);
+        setUser(data);
         dispatch({ type: EDIT_DETAILS, data });
         navigate("/account");
     } catch(error) {
@@ -48,10 +51,10 @@ export const editDetails = (userDetails, navigate) => async(dispatch) => {
     }
 }
 
-export const updatePassword = (data) => async(dispatch) => {
+export const updatePassword = (data, setUser) => async(dispatch) => {
     try {
         const response = await api.updatePassword(data);
-        
+        setUser(response.data);
         dispatch({type: UPDATE_PASSWORD, data: response.data});
 
     } catch (error) {

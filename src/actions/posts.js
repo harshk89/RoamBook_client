@@ -52,7 +52,7 @@ export const createPost = (post, navigate) => async (dispatch) => {
     try {
         dispatch({ type: START_LOADING });
         const { data } = await api.createPost(post);
-        navigate(`/posts/${data._id}`);
+        // navigate(`/posts/${data._id}`);
         // console.log(data);
         dispatch({type: CREATE, payload: data });
         dispatch({ type: END_LOADING });

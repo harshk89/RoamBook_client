@@ -6,10 +6,10 @@ import { AppBar, Box, IconButton, Typography , Menu, Container, Avatar, Button, 
 import roambook_logo from "../../images/roambook_logo.png";
 // import useStyles from "./styles1";
 
-const Navbar1 = () => {
-
+const Navbar1 = ({user, setUser}) => {
+   
     // const classes = useStyles();
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const dispatch = useDispatch();
     const location = useLocation();
     const navigate = useNavigate();
@@ -26,8 +26,8 @@ const Navbar1 = () => {
 
     const logout = () => {
         dispatch({ type: 'LOGOUT' });
-        navigate("/auth", {return: true});
         setUser(null);
+        navigate("/auth", {return: true});
     };
 
     useEffect(() => {
@@ -52,16 +52,16 @@ const Navbar1 = () => {
     return (
         <AppBar position="sticky" sx={appBarStyles} >
             <div maxWidth="false" style={{display: "flex", justifyContent: "space-between", margin: "auto 30px"}} >
-                <Link to='/'><img src={roambook_logo} alt="roambook" height="60px" /></Link>
+                <a href='/posts'><img src={roambook_logo} alt="roambook" height="60px" /></a>
                 {user ? (
                     <Box sx={{ flexGrow: 0, margin: 'auto 0' }}>
-                        <Tooltip title="Open settings">
+                        <Tooltip title="Options">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar alt={user?.result?.name} src={user?.result?.imageUrl}>{user?.result?.name.charAt(0)}</Avatar>
                             </IconButton>
                         </Tooltip>
                         <Menu
-                        sx={{ mt: '5px' }}
+                        sx={{ mt: '5px', maxWidth: "300px" }}
                         id="menu-appbar"
                         anchorEl={anchorElUser}
                         anchorOrigin={{
@@ -76,16 +76,16 @@ const Navbar1 = () => {
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}
                         >
-                            <MenuItem component={Link} to='/posts' onClick={handleCloseUserMenu}>
+                            <MenuItem sx={{width: "100%" }} component={Link} to='/posts' onClick={handleCloseUserMenu}>
                                 <Typography textAlign="center">Home</Typography>
                             </MenuItem>
-                            <MenuItem component={Link} to='/profile' onClick={handleCloseUserMenu}>
+                            <MenuItem sx={{width: "100%" }} component={Link} to='/profile' onClick={handleCloseUserMenu}>
                                 <Typography textAlign="center">Profile</Typography>
                             </MenuItem>
-                            <MenuItem component={Link} to='/account' onClick={handleCloseUserMenu}>
+                            <MenuItem sx={{width: "100%" }} component={Link} to='/account' onClick={handleCloseUserMenu}>
                                 <Typography textAlign="center">Account</Typography>
                             </MenuItem>
-                            <MenuItem onClick={handleCloseUserMenu}>
+                            <MenuItem sx={{width: "100%" }} onClick={handleCloseUserMenu}>
                                 <Button variant="contained" color="secondary" onClick={logout}>Logout</Button>
                             </MenuItem>
                         </Menu>
