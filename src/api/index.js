@@ -2,8 +2,8 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 
 // export const fetchPosts = () => axios.get(url);
-const url = 'http://localhost:5000'
-// const url = 'https://roambookserver.onrender.com';
+// const url = 'http://localhost:5000'
+const url = 'https://roambookserver.onrender.com';
 
 const API = axios.create({ baseURL: url });
 

@@ -2,15 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePost, likePost } from '../../../actions/posts.js';
 import { useNavigate } from 'react-router-dom';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Avatar from '@mui/material/Avatar';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+import { Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, Divider, IconButton, Typography } from '@mui/material';
 import moment from 'moment'
 import no_image from '../../../images/no_image.jpg';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -52,9 +44,35 @@ const Post1 = ({ post, setCurrentId, user, setUser }) => {
         navigate(`/posts/${post._id}`);
     }
 
+    const cardStyles = {
+        background: "linear-gradient(90deg, rgba(255,242,226,1) 23%, rgba(255,232,252,1) 75%)",
+        position: "relative",
+        transition: "all 0.8s",
+        height: '500px',
+        padding: "0px",
+    }
+    const cardContentStyles = {
+        height: "115px",
+        overflowY: "scroll",
+    }
+    const cardMediaStyles = {
+        height: "250px",
+    }
+    const cardHeaderStyles = {
+        maxHeight: "25px",
+        overflowY: "hidden"
+    }
+    const cardActionsStyles = {
+        display: "flex",
+        justifyContent: "space-between",
+        marginLeft: "10px",
+        marginRight: "10px",
+        overflowY: "hidden",
+    }
+
     return (
-        <Card raised elevation={6} className={classes.card}>
-            <CardHeader className={classes.cardHeader}
+        <Card raised elevation={6} className={classes.card} style={cardStyles}>
+            <CardHeader className={classes.cardHeader} style={cardHeaderStyles}
                 avatar={
                 <Avatar sx={{ bgcolor: red[500] }} aria-label="user">
                     {post.name.charAt(0)}
@@ -72,20 +90,20 @@ const Post1 = ({ post, setCurrentId, user, setUser }) => {
                 title={post.name}
                 subheader={moment(post.createdAt).fromNow()}
             />
-            <CardMedia className={classes.cardMedia}
+            <CardMedia className={classes.cardMedia} style={cardMediaStyles}
                 component="img"
                 image={post.selectedFile || no_image}
                 alt={post.title}
                 title={post.title}
                 onClick={openPost}
             />
-            <CardContent onClick={openPost} className={classes.cardContent} >
+            <CardContent onClick={openPost} className={classes.cardContent} style={cardContentStyles} >
                 <Typography variant="h6" gutterBottom>{post.title}</Typography>
                 <Typography variant="body2" color="text.secondary">{post.message}</Typography>
                 <Typography variant="caption" color="textSecondary" >{post.tags.map((tag) => `#${tag} `)}</Typography>
             </CardContent>
             <Divider sx={{marginLeft: "10px", marginRight: "10px"}} />
-            <CardActions className={classes.cardActions}  sx={{padding: "0px"}}>
+            <CardActions className={classes.cardActions} style={cardActionsStyles}>
                 <IconButton aria-label="Like" disabled={!user?.result} onClick={handleLike}>
                     <Likes />
                 </IconButton>

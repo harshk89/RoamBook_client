@@ -42,16 +42,6 @@ const Form = ({ currentId, setCurrentId}) => {
     setPostData({ title: '', message:'', tags:'', selectedFile:'' });
   }
 
-  if(!user?.result?.name) {
-    return (
-      <Paper className={classes.paper}>
-        <Typography variant="h6" align="center">
-          Sign in to share your memories.
-        </Typography>
-      </Paper>
-    );
-  }
-
   const toggleForm = () => {
     setExpandForm(!expandForm);
   }
@@ -68,19 +58,54 @@ const Form = ({ currentId, setCurrentId}) => {
     }
   };
 
+  const paperStyles = {
+    padding: '16px',
+    marginBottom: '1rem',
+    background: 'linear-gradient(90deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%)'
+  }
+  const formStyles = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  }
+  const toggleButtonStyles = {
+    margin:"auto",
+    width: "100%",
+    fontSize: "1rem",
+  }
+  const textFieldStyles = {
+    background: 'Cornsilk',
+    borderRadius: '5px',
+    marginBottom: '8px'
+  }
+  const fileInputStyles = {
+    width: '97%',
+    margin: '10px 0',
+  }
+
+  if(!user?.result?.name) {
+    return (
+      <Paper className={classes.paper} style={paperStyles}>
+        <Typography variant="h6" align="center">
+          Sign in to share your memories.
+        </Typography>
+      </Paper>
+    );
+  }
+
   return (
-    <Paper className={classes.paper} elevation={6}>
-      <Button onClick={toggleForm} className={classes.toggleButton}>{`${currentId ? 'Editing Memory' : 'Create new Memory'}`} {expandForm ? <ExpandLessIcon/>:<ExpandMoreIcon/>}</Button>
+    <Paper className={classes.paper} style={paperStyles} elevation={6}>
+      <Button onClick={toggleForm} className={classes.toggleButton} style={toggleButtonStyles}>{`${currentId ? 'Editing Memory' : 'Create new Memory'}`} {expandForm ? <ExpandLessIcon/>:<ExpandMoreIcon/>}</Button>
       {expandForm && 
-      <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
+      <form autoComplete='off' noValidate className={`${classes.root} ${classes.form}`} style={formStyles} onSubmit={handleSubmit}>
         {/* <Typography variant="h6">{`${currentId ? 'Editing Memory' : 'Create new Memory'}`}</Typography> */}
-        <TextField name="title" variant="outlined" className={classes.textField} placeholder='title' fullWidth value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value})} />
-        <TextField name="message" variant="outlined" className={classes.textField} placeholder="Message" fullWidth value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value})} />
-        <TextField name="tags" variant="outlined" className={classes.textField} label="Comma separated tags" fullWidth value={postData.tags} onChange={handleTagsInput} />
-        <div className={classes.fileInput}>
+        <TextField name="title" variant="outlined" className={classes.textField} style={textFieldStyles} placeholder='title' fullWidth value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value})} />
+        <TextField name="message" variant="outlined" className={classes.textField} style={textFieldStyles} placeholder="Message" fullWidth value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value})} />
+        <TextField name="tags" variant="outlined" className={classes.textField} style={textFieldStyles} label="Comma separated tags" fullWidth value={postData.tags} onChange={handleTagsInput} />
+        <div className={classes.fileInput} style={fileInputStyles}>
           <FileBase type="file" multiple={false} onDone={({base64}) => {setPostData({ ...postData, selectedFile: base64})}} />
         </div>
-        <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth >Submit</Button>
+        <Button className={classes.buttonSubmit} style={{marginBottom: '10px'}} variant="contained" color="primary" size="large" type="submit" fullWidth >Submit</Button>
         <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth >Clear</Button>
       </form>
       }

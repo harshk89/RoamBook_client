@@ -1,4 +1,4 @@
-import React , { useState, useRef } from "react";
+import React , { useState, useEffect, useRef } from "react";
 import { Typography, TextField, Button, Divider } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux';
 import { commentPost } from '../../actions/posts';
@@ -23,9 +23,36 @@ const CommentSection = ({ post }) => {
         commentsRef.current.scrollIntoView({ behaviour: 'smooth' });
     };
 
+    const [windowSize, setWindowSize] = useState(window.innerWidth);
+        const width = windowSize < 600 ? '70vw' : '40vw';
+        useEffect(() => {
+            const handleResize = () => {
+                setWindowSize(window.innerWidth);
+            };
+
+            // Initial check on mount
+            handleResize();
+
+            // Add event listener for window resize
+            window.addEventListener('resize', handleResize);
+
+            // Cleanup the event listener when the component unmounts
+            return () => {
+                window.removeEventListener('resize', handleResize);
+            };
+        }, []);
+
+        const commentsContainerStyles = {
+            maxHeight: '200px',
+            width: width,
+            overflowY: 'auto',
+            marginRight: '30px',
+            marginBottom: '20px'
+        }
+
     return(
         <div>
-            <div className={classes.commentsContainer}>
+            <div className={classes.commentsContainer} style={commentsContainerStyles}>
                 <Typography gutterBottom variant="h6">Comments</Typography>
                 {comments.map((c, i) => (
                     <Typography key={i} gutterBottom variant="subtitle1">

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Container, Grow, Grid, Paper, AppBar, TextField, Button } from '@material-ui/core';
 
 import { useNavigate, useLocation } from 'react-router-dom';
-import ChipInput from 'material-ui-chip-input';
 
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
@@ -10,6 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPostsBySearch } from '../../actions/posts';
 import useStyles from './styles.js'
 import Pagination from "../Pagination";
+
+import { useTheme } from '@material-ui/core/styles';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -26,11 +27,28 @@ const Home = ({ user, setUser }) => {
   const [search, setSearch] = useState('');
   const [tags, setTags] = useState('');
   const { isLoading} = useSelector((state) => state.posts);
-  // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
-  // useEffect(() => {
-  //   dispatch(getPosts());
-  // }, [currentId, dispatch]);
+  const theme = useTheme();
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const flexDirection = isSmallScreen ? 'column-reverse' : 'row';
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 600);
+    };
+
+    // Initial check on mount
+    handleResize();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
   const handleKeyPress = (e) => {
     // e.preventDefault();
@@ -71,16 +89,30 @@ const Home = ({ user, setUser }) => {
     }
   }
 
+  const inputFieldStyles = {
+    background: 'cornsilk',
+    borderRadius: '4px',
+    marginBottom: "10px"
+  }
+  const appBarSearchStyles = {
+    borderRadius: 4,
+    marginBottom: '1rem',
+    display: 'flex',
+    padding: '16px',
+    background: 'linear-gradient(90deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%)'
+  }
+
   return (
     <Grow in>
         <Container maxWidth="xl">
-          <Grid container className={classes.gridContainer} justifyContent="space-between" alignItems="stretch" spacing={3}>
+          <Grid container style={{flexDirection: flexDirection}} className={classes.gridContainer} justifyContent="space-between" alignItems="stretch" spacing={3}>
             <Grid item xs={12} sm={6} md={9}>
               <Posts setCurrentId={setCurrentId} user={user} setUser={setUser} />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
-              <AppBar className={classes.appBarSearch} position="static" color="inherit" >
+              <AppBar className={classes.appBarSearch} style={appBarSearchStyles} position="static" color="inherit" >
                 <TextField className={classes.inputField}
+                  style={inputFieldStyles}
                   name="search" 
                   variant="outlined" 
                   label="Search Memories"
@@ -88,9 +120,9 @@ const Home = ({ user, setUser }) => {
                   fullWidth
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  style={{marginBottom: "10px"}}
                 />
                 <TextField className={classes.inputField}
+                  style={inputFieldStyles}
                   name="tags" 
                   variant="outlined" 
                   label="Enter comma separated tags"
@@ -98,7 +130,6 @@ const Home = ({ user, setUser }) => {
                   fullWidth
                   value={tags}
                   onChange={handleInputChange}
-                  style={{marginBottom: "10px"}}
                 />
                 {/* <ChipInput className={classes.inputField}
                   style={{margin: '10px 0'}}

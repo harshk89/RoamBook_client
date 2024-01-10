@@ -2,15 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePost, likePost } from '../../../actions/posts.js';
 import { useNavigate } from 'react-router-dom';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Avatar from '@mui/material/Avatar';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
+import { Card, CardHeader, CardMedia, CardContent, CardActions, Avatar, Divider, IconButton, Typography } from '@mui/material';
 import moment from 'moment'
 import no_image from '../../../images/no_image.jpg';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';

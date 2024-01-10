@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, Divider, Button, TextField, Alert } from '@mui/material';
-import { Grid } from '@material-ui/core';
+// import { Grid } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux'
 import { editDetails, updatePassword } from '../../actions/auth';
 import { resetPassStatus } from '../../actions/auth';
 
 import useStyles from './styles';
 import { useNavigate } from 'react-router-dom';
-
-
 
 const Account = ({ user, setUser }) => {
     const classes = useStyles();
@@ -44,29 +42,41 @@ const Account = ({ user, setUser }) => {
         const data = {password,newPassword};
         dispatch(updatePassword(data, setUser));
     }
+
+    const mainContainerStyles = {
+        background: 'white',
+        borderRadius: '8px',
+        padding: '40px',
+        width: '50vw',
+        '@media (max-width: 960px)': {width: '90vw'}
+    }
+    const headerStyles = {
+
+    }
+    const textFieldStyles = {
+
+    }
+
     
     return(
-        <Container className={classes.mainContainer} sx={{
-            width: '50vw',
-            '@media (max-width: 960px)': {width: '90vw'}
-        }}>
-            <div className={classes.header} >
+        <Container className={classes.mainContainer} sx={mainContainerStyles}>
+            <div className={classes.header} style={{marginBottom: '20px'}} >
                 <Typography variant='h4' gutterBottom>Account</Typography>
                 <Divider />
             </div>
             {editEnabled ? (
-            <form className={classes.details} onSubmit={handleEdit}>
-                <div className={classes.userDetail} >
+            <form className={classes.details} style={{margin: '8px'}} onSubmit={handleEdit}>
+                <div className={classes.userDetail} style={{display: 'flex', alignItems: 'center'}} >
                     <Typography variant="body1" gutterBottom sx={{width: "100px"}}>First Name:</Typography>
-                    <TextField id="filled-basic" variant="filled" size="small" className={classes.textField} value={userDetails.firstName} onChange={(e) => setUserDetails({ ...userDetails, firstName: e.target.value})} />
+                    <TextField id="filled-basic" variant="filled" size="small" className={classes.textField} style={{color: 'green', marginTop: '10px'}} value={userDetails.firstName} onChange={(e) => setUserDetails({ ...userDetails, firstName: e.target.value})} />
                 </div>
-                <div className={classes.userDetail} >
+                <div className={classes.userDetail} style={{display: 'flex', alignItems: 'center'}} >
                     <Typography variant="body1" gutterBottom sx={{width: "100px"}}>Last Name:</Typography>
-                    <TextField required id="filled-required" variant="filled" size="small" className={classes.textField} value={userDetails.lastName} onChange={(e) => setUserDetails({ ...userDetails, lastName: e.target.value})} />
+                    <TextField required id="filled-required" variant="filled" size="small" className={classes.textField} style={{color: 'green', marginTop: '10px'}} value={userDetails.lastName} onChange={(e) => setUserDetails({ ...userDetails, lastName: e.target.value})} />
                 </div>
-                <div className={classes.userDetail} >
+                <div className={classes.userDetail} style={{display: 'flex', alignItems: 'center'}} >
                     <Typography variant="body1" gutterBottom sx={{width: "100px"}}>Email:</Typography>
-                    <TextField id="filled-read-only-input" variant="filled" size="small" InputProps={{readOnly: true}} className={classes.textField} value={userDetails.email} />
+                    <TextField id="filled-read-only-input" variant="filled" size="small" InputProps={{readOnly: true}} className={classes.textField} style={{color: 'green', marginTop: '10px'}} value={userDetails.email} />
                 </div>
                 {user?.result?.name===(userDetails.firstName+" "+userDetails.lastName) ? (
                 <Button disabled variant="contained" sx={{marginTop: "20px", marginBottom: "20px"}}>Submit</Button>) : (
@@ -81,19 +91,19 @@ const Account = ({ user, setUser }) => {
                 </>
             )}
             <Divider />
-            <form className={classes.changePass} onSubmit={handleUpdatePass}>
-                <div className={classes.userDetail} >
+            <form className={classes.changePass} style={{margin: '8px'}} onSubmit={handleUpdatePass}>
+                <div className={classes.userDetail} style={{display: 'flex', alignItems: 'center'}} >
                     <Typography variant="body1" gutterBottom sx={{width: "180px"}}>Current Password:</Typography>
-                    <TextField id="filled-basic" variant="filled" size="small" type='password' className={classes.textField} onChange={(e)=>setPassword(e.target.value)} />
+                    <TextField id="filled-basic" variant="filled" size="small" type='password' className={classes.textField} style={{color: 'green', marginTop: '10px'}} onChange={(e)=>setPassword(e.target.value)} />
                 </div>
-                <div className={classes.userDetail} >
+                <div className={classes.userDetail} style={{display: 'flex', alignItems: 'center'}} >
                     <Typography variant="body1" gutterBottom sx={{width: "180px"}}>New Password:</Typography>
-                    <TextField id="filled-basic" variant="filled" size="small" type='password' className={classes.textField} onChange={(e)=>setNewPassword(e.target.value)} />
+                    <TextField id="filled-basic" variant="filled" size="small" type='password' className={classes.textField} style={{color: 'green', marginTop: '10px'}} onChange={(e)=>setNewPassword(e.target.value)} />
                 </div>
-                <div className={classes.userDetail} >
+                <div className={classes.userDetail} style={{display: 'flex', alignItems: 'center'}} >
                     <Typography variant="body1" gutterBottom sx={{width: "180px"}}>Confirm New Password:</Typography>
-                    {newPassword===confirmPassword ? (<TextField id="filled-basic" variant="filled" size="small" type='password' className={classes.textField} onChange={(e)=>setConfirmPassword(e.target.value)} />) : 
-                    (<TextField error id="filled-basic" variant="filled" size="small" type='password' className={classes.textField} onChange={(e)=>setConfirmPassword(e.target.value)} />)}
+                    {newPassword===confirmPassword ? (<TextField id="filled-basic" variant="filled" size="small" type='password' className={classes.textField} style={{color: 'green', marginTop: '10px'}} onChange={(e)=>setConfirmPassword(e.target.value)} />) : 
+                    (<TextField error id="filled-basic" variant="filled" size="small" type='password' className={classes.textField} style={{color: 'green', marginTop: '10px'}} onChange={(e)=>setConfirmPassword(e.target.value)} />)}
                 </div>
                 {(password && newPassword.length>=5 && newPassword===confirmPassword) ? (
                 <Button variant="contained" type="submit" sx={{marginTop: "20px", marginBottom: "20px"}}>Update Password</Button>) : (

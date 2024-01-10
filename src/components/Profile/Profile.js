@@ -4,7 +4,7 @@ import { Grid, CircularProgress } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux'
 
 import no_profile from "../../images/no_profile.png";
-import Post2 from '../Posts/Post/Post2';
+import Post1 from '../Posts/Post/Post1';
 import { getPostsByUserId } from '../../actions/posts';
 import useStyles from './style';
 import Form from '../Form/Form';
@@ -22,10 +22,21 @@ const Profile = ({ user, setUser }) => {
         dispatch(getPostsByUserId(user?.result._id));
       }
     }, [])
+
+    const mainContainerStyles = {
+      background: "#ffcbcb",
+      borderRadius: '8px',
+      padding: '20px',
+    }
+    const headerStyles = {
+      display: 'flex',
+      marginBottom: "30px",
+      marginTop: '30px'
+    }
     
     return(
-        <Container className={classes.mainContainer}>
-            <Container className={classes.header} sx={{display: 'flex'}}>
+        <Container className={classes.mainContainer} style={mainContainerStyles}>
+            <Container className={classes.header} style={headerStyles}>
                 <Avatar alt="profile_pic" src={no_profile} sx={{ width: 100, height: 100 }}/>
                 <Container>
                     <Typography variant="h5">{user?.result?.name}</Typography>
@@ -45,7 +56,7 @@ const Profile = ({ user, setUser }) => {
                         <Grid container alignItems='stretch' spacing={3}>
                           {posts.map((post) => (
                             <Grid key={post._id} item xs={12} sm={12} md={6} lg={4}>
-                              <Post2 post={post}/>
+                              <Post1 post={post}/>
                             </Grid>
                           ))}
                         </Grid>
