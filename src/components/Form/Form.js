@@ -59,8 +59,8 @@ const Form = ({ currentId, setCurrentId}) => {
   const handleTagsInput = (e) => {
     const inputValue = e.target.value;
 
-    // regular expression to match only alphabets, digits and commas
-    const validInput = /^[0-9a-zA-Z,]*$/.test(inputValue);
+    // regular expression to match only lowercase alphabets, digits, commas and underscore
+    const validInput = /^[0-9a-z_,]*$/.test(inputValue);
 
     if (validInput || inputValue === '') {
       // setTags(inputValue);

@@ -52,7 +52,7 @@ const Navbar1 = ({user, setUser}) => {
     return (
         <AppBar position="sticky" sx={appBarStyles} >
             <div maxWidth="false" style={{display: "flex", justifyContent: "space-between", margin: "auto 30px"}} >
-                <a href='/posts'><img src={roambook_logo} alt="roambook" height="60px" /></a>
+                <Link to='/posts'><img src={roambook_logo} alt="roambook" height="60px" /></Link>
                 {user ? (
                     <Box sx={{ flexGrow: 0, margin: 'auto 0' }}>
                         <Tooltip title="Options">
