@@ -37,7 +37,7 @@ const App = () => {
       <BrowserRouter >
         <Container style={backgroundStyles()} sx={{}}>
           <Navbar1 user={user} setUser={setUser}/>
-          <LoadingBar />
+          {/* <LoadingBar /> */}
           <Routes>
             {/* <Route path="/" element={<LandingPage />} /> */}
             <Route path="/" element={<Navigate to="/auth" />} />

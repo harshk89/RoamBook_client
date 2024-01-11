@@ -47,9 +47,9 @@ const Navbar1 = ({user, setUser}) => {
         setUser(JSON.parse(localStorage.getItem('profile')));
 
         //setting theme stored in localStorage
-        if(theme!==localStorage.getItem('theme')) {
-            dispatch({ type: "CHANGE_THEME" });
-        }
+        // if(theme!==localStorage.getItem('theme')) {
+        //     dispatch({ type: "CHANGE_THEME" });
+        // }
 
     }, [location]);
 
