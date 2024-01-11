@@ -15,6 +15,7 @@ const Profile = ({ user, setUser }) => {
     const dispatch = useDispatch();
     // const user = useSelector((state) => state.authReducer.authData);
     // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    const { theme } = useSelector((state) => state.posts);
     const [currentId, setCurrentId] = useState(null);
 
     useEffect(() => {
@@ -23,10 +24,25 @@ const Profile = ({ user, setUser }) => {
       }
     }, [])
 
-    const mainContainerStyles = {
-      background: "#ffcbcb",
-      borderRadius: '8px',
-      padding: '20px',
+    const mainContainerStyles = () => {
+      return(
+        theme==='light'?{
+          background: "#f0f0f0",
+          padding: '20px',
+          borderLeft: '1px solid #dadada',
+          borderRight: '1px solid #dadada',
+          color: 'black',
+          minHeight: '100vh',
+        }:{
+          background: "#313131",
+          padding: '20px',
+          borderLeft: '1px solid #444444',
+          borderRight: '1px solid #444444',
+          color: '#dfdfdf',
+          minHeight: '100vh',
+        }
+      )
+      
     }
     const headerStyles = {
       display: 'flex',
@@ -35,7 +51,7 @@ const Profile = ({ user, setUser }) => {
     }
     
     return(
-        <Container className={classes.mainContainer} style={mainContainerStyles}>
+        <Container className={classes.mainContainer} style={mainContainerStyles()}>
             <Container className={classes.header} style={headerStyles}>
                 <Avatar alt="profile_pic" src={no_profile} sx={{ width: 100, height: 100 }}/>
                 <Container>

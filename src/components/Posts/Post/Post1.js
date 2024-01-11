@@ -18,6 +18,7 @@ const Post1 = ({ post, setCurrentId, user, setUser }) => {
     const dispatch = useDispatch();
     // const user = useSelector((state) => state.authReducer.authData);
     // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    const { theme } = useSelector((state) => state.posts);
     const [likes, setLikes] = useState(post?.likes);
 
     const userId = user?.result?._id;
@@ -44,12 +45,25 @@ const Post1 = ({ post, setCurrentId, user, setUser }) => {
         navigate(`/posts/${post._id}`);
     }
 
-    const cardStyles = {
-        background: "linear-gradient(90deg, rgba(255,242,226,1) 23%, rgba(255,232,252,1) 75%)",
-        position: "relative",
-        transition: "all 0.8s",
-        height: '500px',
-        padding: "0px",
+    const cardStyles = () => {
+        return(
+            theme==="light"?{
+                // background: "linear-gradient(90deg, rgba(255,242,226,1) 23%, rgba(255,232,252,1) 75%)",
+                backgroundColor: "white",
+                position: "relative",
+                transition: "all 0.8s",
+                height: '500px',
+                padding: "0px",
+                color: 'black'
+            }:{
+                backgroundColor: "black",
+                position: "relative",
+                transition: "all 0.8s",
+                height: '500px',
+                padding: "0px",
+                color: 'white'
+            }
+        )
     }
     const cardContentStyles = {
         height: "115px",
@@ -58,9 +72,18 @@ const Post1 = ({ post, setCurrentId, user, setUser }) => {
     const cardMediaStyles = {
         height: "250px",
     }
-    const cardHeaderStyles = {
-        maxHeight: "25px",
-        overflowY: "hidden"
+    const cardHeaderStyles = () => {
+        return(
+            theme==='light'?{
+                maxHeight: "25px",
+                overflowY: "hidden",
+                color: 'black'
+            }:{
+                maxHeight: "25px",
+                overflowY: "hidden",
+                color: '#e2e2e2'
+            }
+        )
     }
     const cardActionsStyles = {
         display: "flex",
@@ -71,8 +94,8 @@ const Post1 = ({ post, setCurrentId, user, setUser }) => {
     }
 
     return (
-        <Card raised elevation={6} className={classes.card} style={cardStyles}>
-            <CardHeader className={classes.cardHeader} style={cardHeaderStyles}
+        <Card raised elevation={6} className={classes.card} style={cardStyles()}>
+            <CardHeader className={classes.cardHeader} style={cardHeaderStyles()}
                 avatar={
                 <Avatar sx={{ bgcolor: red[500] }} aria-label="user">
                     {post.name.charAt(0)}
@@ -88,7 +111,11 @@ const Post1 = ({ post, setCurrentId, user, setUser }) => {
                 //     </IconButton>
                 // }
                 title={post.name}
-                subheader={moment(post.createdAt).fromNow()}
+                subheader={
+                    <span style={{ fontSize: '0.8rem', color: theme==="light"?'#5e5e5e':'#c4c4c4' }}>
+                        {moment(post.createdAt).fromNow()}
+                    </span>
+                }
             />
             <CardMedia className={classes.cardMedia} style={cardMediaStyles}
                 component="img"
@@ -98,18 +125,18 @@ const Post1 = ({ post, setCurrentId, user, setUser }) => {
                 onClick={openPost}
             />
             <CardContent onClick={openPost} className={classes.cardContent} style={cardContentStyles} >
-                <Typography variant="h6" gutterBottom>{post.title}</Typography>
-                <Typography variant="body2" color="text.secondary">{post.message}</Typography>
-                <Typography variant="caption" color="textSecondary" >{post.tags.map((tag) => `#${tag} `)}</Typography>
+                <Typography variant="h6" gutterBottom style={{color: theme==='light'?'black':'#e2e2e2'}}>{post.title}</Typography>
+                <Typography variant="body2" style={{color: theme==='light'?'black':'#cbcbcb'}}>{post.message}</Typography>
+                <Typography variant="caption" sx={{color: '#15afff'}}>{post.tags.map((tag) => `#${tag} `)}</Typography>
             </CardContent>
-            <Divider sx={{marginLeft: "10px", marginRight: "10px"}} />
+            <Divider sx={{marginLeft: "10px", marginRight: "10px", marginBottom: '-6px'}} />
             <CardActions className={classes.cardActions} style={cardActionsStyles}>
                 <IconButton aria-label="Like" disabled={!user?.result} onClick={handleLike}>
                     <Likes />
                 </IconButton>
                 {(user?.result?._id === post?.creator) && (
                     <IconButton aria-label="delete" onClick={() => dispatch(deletePost(post._id))}>
-                        <DeleteIcon />
+                        <DeleteIcon sx={{color: '#757575'}} />
                     </IconButton>
                 )}
             </CardActions>

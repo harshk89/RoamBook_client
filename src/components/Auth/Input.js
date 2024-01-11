@@ -1,14 +1,19 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { TextField, Grid, InputAdornment, IconButton } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
 
-const Input = ({ error=false, half, name, handleChange, label, autoFocus, type, handleShowPassword }) => {
+const Input = ({ error='none', half, name, handleChange, label, autoFocus, type, handleShowPassword }) => {
+
+  const { isLoading, theme } = useSelector((state) => state.posts);
+
   return (
     <Grid item xs={12} sm={half ? 6 : 12}>
-        {error===false ? 
+        {error==='none' ? 
             <TextField 
+                style={{backgroundColor:'#fcfcfc'}}
                 name={name} 
                 onChange={handleChange} 
                 variant='outlined' 
@@ -29,7 +34,7 @@ const Input = ({ error=false, half, name, handleChange, label, autoFocus, type, 
             /> : 
             <TextField 
                 error
-                helperText="Username and password does not match!"
+                helperText={error}
                 name={name} 
                 onChange={handleChange} 
                 variant='outlined' 

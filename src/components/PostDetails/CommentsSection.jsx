@@ -49,6 +49,11 @@ const CommentSection = ({ post }) => {
             marginRight: '30px',
             marginBottom: '20px'
         }
+        const commentFieldStyles = {
+            backgroundColor: '#fcfcfc',
+            borderRadius: '10px',
+            border: 'none'
+        }
 
     return(
         <div>
@@ -74,9 +79,10 @@ const CommentSection = ({ post }) => {
                             multiline
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
+                            style={commentFieldStyles}
                         />
-                        <Button style={{ marginTop: '10px' }} fullWidth disabled={!comment} variant='contained' color="primary" onClick={handleClick}>
-                            Comment
+                        <Button style={{ marginTop: '10px', backgroundColor: comment?'#0088b7':'#006689' }} fullWidth disabled={!comment} variant='contained' onClick={handleClick}>
+                            <span style={{color: comment?'white':'#cdcdcd'}}>Comment</span>
                         </Button>
                     </div>
                 )}

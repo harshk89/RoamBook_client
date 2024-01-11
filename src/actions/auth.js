@@ -1,7 +1,7 @@
 import { AUTH, RESET_PASS_STATUS, EDIT_DETAILS, UPDATE_PASSWORD } from '../constants/actionTypes';
 import * as api from '../api';
 
-export const signin = (formData, setIsWrongPass, setLoading, navigate, setUser) => async (dispatch) => {
+export const signin = (formData, setWrongPassErr, setLoading, navigate, setUser) => async (dispatch) => {
     try {
         const response = await api.signIn(formData);
         
@@ -11,10 +11,11 @@ export const signin = (formData, setIsWrongPass, setLoading, navigate, setUser) 
         setLoading(false);
         navigate("/posts", {return: true});
     } catch (error) {
-        if(error.response.status==400) {
-            setLoading(false);
-            setIsWrongPass("true");
-        }
+        if(error.response.status==400)
+            setWrongPassErr("Username and password does not match!");
+        else if(error.response.status==404)
+            setWrongPassErr("User does not exist!");
+        setLoading(false);
         console.log(error);
     }
 }
@@ -31,6 +32,7 @@ export const signup = (formData, setLoading, navigate, setUser) => async (dispat
 
         navigate("/", {return: true});
     } catch (error) {
+        setLoading(false);
         console.log(error);
     }
 }
@@ -43,6 +45,7 @@ export const resetPassStatus = () => async (dispatch) => {
 export const editDetails = (userDetails, navigate, setUser) => async(dispatch) => {
     try {
         const { data } = await api.editDetails(userDetails);
+        console.log(data);
         setUser(data);
         dispatch({ type: EDIT_DETAILS, data });
         navigate("/account");
@@ -51,12 +54,12 @@ export const editDetails = (userDetails, navigate, setUser) => async(dispatch) =
     }
 }
 
-export const updatePassword = (data, setUser) => async(dispatch) => {
+export const updatePassword = (data, setUser, clear) => async(dispatch) => {
     try {
         const response = await api.updatePassword(data);
         setUser(response.data);
-        dispatch({type: UPDATE_PASSWORD, data: response.data});
-
+        dispatch({ type: UPDATE_PASSWORD, data: response.data });
+        clear();
     } catch (error) {
         console.log(error);
         const status = "failed";

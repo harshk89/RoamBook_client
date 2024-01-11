@@ -10,8 +10,6 @@ import { getPostsBySearch } from '../../actions/posts';
 import useStyles from './styles.js'
 import Pagination from "../Pagination";
 
-import { useTheme } from '@material-ui/core/styles';
-
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
@@ -26,9 +24,8 @@ const Home = ({ user, setUser }) => {
   const searchQuery = query.get('searchQuery');
   const [search, setSearch] = useState('');
   const [tags, setTags] = useState('');
-  const { isLoading} = useSelector((state) => state.posts);
+  const { isLoading, theme } = useSelector((state) => state.posts);
 
-  const theme = useTheme();
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const flexDirection = isSmallScreen ? 'column-reverse' : 'row';
   useEffect(() => {
@@ -89,30 +86,54 @@ const Home = ({ user, setUser }) => {
     }
   }
 
-  const inputFieldStyles = {
-    background: 'cornsilk',
-    borderRadius: '4px',
-    marginBottom: "10px"
+  const inputFieldStyles = () => {
+    return(
+      theme==="light"?{
+        background: '#fcfcfc',
+        borderRadius: '4px',
+        marginBottom: "10px"
+      }:{
+        background: '#c6c6c6',
+        borderRadius: '4px',
+        marginBottom: "10px"
+      }
+    )
   }
-  const appBarSearchStyles = {
-    borderRadius: 4,
-    marginBottom: '1rem',
-    display: 'flex',
-    padding: '16px',
-    background: 'linear-gradient(90deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%)'
+  const appBarSearchStyles = () => {
+    return(
+      theme==="light"?{
+      borderRadius: 4,
+      marginBottom: '1rem',
+      display: 'flex',
+      padding: '16px',
+      backgroundColor: "white"
+    }:{
+      borderRadius: 4,
+      marginBottom: '1rem',
+      display: 'flex',
+      padding: '16px',
+      backgroundColor: "black"
+    })
+  }
+  const searchButtonStyles = () => {
+    return(
+      theme==="light"?
+        {backgroundColor: "#0088b7", color: "white"}:
+        {backgroundColor: "#0088b7", color: "white"}
+    )
   }
 
   return (
     <Grow in>
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" style={{paddingBottom: "20px", marginTop: '25px', minHeight: '100vh'}}>
           <Grid container style={{flexDirection: flexDirection}} className={classes.gridContainer} justifyContent="space-between" alignItems="stretch" spacing={3}>
             <Grid item xs={12} sm={6} md={9}>
               <Posts setCurrentId={setCurrentId} user={user} setUser={setUser} />
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
-              <AppBar className={classes.appBarSearch} style={appBarSearchStyles} position="static" color="inherit" >
+              <AppBar className={classes.appBarSearch} style={appBarSearchStyles()} position="static" color="inherit" >
                 <TextField className={classes.inputField}
-                  style={inputFieldStyles}
+                  style={inputFieldStyles()}
                   name="search" 
                   variant="outlined" 
                   label="Search Memories"
@@ -122,7 +143,7 @@ const Home = ({ user, setUser }) => {
                   onChange={(e) => setSearch(e.target.value)}
                 />
                 <TextField className={classes.inputField}
-                  style={inputFieldStyles}
+                  style={inputFieldStyles()}
                   name="tags" 
                   variant="outlined" 
                   label="Enter comma separated tags"
@@ -139,7 +160,7 @@ const Home = ({ user, setUser }) => {
                   label="Search Tags"
                   variant="outlined"
                 /> */}
-                <Button onClick={searchPost} className={classes.searchButton} variant="contained" color="primary">Search</Button>
+                <Button onClick={searchPost} className={classes.searchButton} variant="contained" style={searchButtonStyles()}>Search</Button>
               </AppBar>
               <Form currentId={currentId} setCurrentId={setCurrentId}/>
 
@@ -147,7 +168,7 @@ const Home = ({ user, setUser }) => {
             </Grid>
           </Grid>
           {(!searchQuery && !tags.length) && (
-            <Paper classes={classes.pagination} elevation={6} style={{ maxWidth: "800px", margin: "30px auto 10px auto", padding: '10px 0' }}>
+            <Paper classes={classes.pagination} elevation={6} style={{ maxWidth: "500px", margin: "30px auto 10px auto", borderRadius: '6px' }}>
               <Pagination page={page} />
             </Paper>
           )}

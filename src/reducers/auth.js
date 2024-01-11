@@ -7,7 +7,7 @@ export default (state = { authData: null, passChangeStatus: "notInitiated" }, ac
             return { ...state, authData: action.data };
 
         case LOGOUT:
-            localStorage.clear();
+            localStorage.removeItem('token');
 
             return { ...state, authData: null };
 

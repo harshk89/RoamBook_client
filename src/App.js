@@ -1,23 +1,43 @@
 import React, { useState } from 'react'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-// import { Container } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import Home from './components/Home/Home';
 import Auth from './components/Auth/Auth';
 import PostDetails from './components/PostDetails/PostDetails';
 import Navbar1 from './components/Navbar/Navbar1';
 import Profile from './components/Profile/Profile';
 import Account from './components/Account/Account';
-// import { useSelector } from 'react-redux';
+import LoadingBar from './components/LoadingBar/LoadingBar';
+import { useSelector } from 'react-redux';
+import Footer from './components/Footer/Footer';
 // import LandingPage from './components/LandingPage/LandingPage';
 
 const App = () => {
   // const user = useSelector((state) => state.authReducer.authData);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const { theme } = useSelector((state) => state.posts);
+
+  const backgroundStyles = () => {
+    return(
+      theme==="light"?{
+        backgroundColor: "white",
+        maxWidth: "100vw",
+        margin: '0px',
+        padding: '0px'
+      }:{
+        background: 'linear-gradient(180deg, rgba(35,35,35,1) 46%, rgba(47,47,47,1) 100%)',
+        maxWidth: "100vw",
+        margin: '0px',
+        padding: '0px'
+      }
+    )
+  }
 
   return (
-      <BrowserRouter>
-        {/* <Container maxWidth="xl"> */}
+      <BrowserRouter >
+        <Container style={backgroundStyles()} sx={{}}>
           <Navbar1 user={user} setUser={setUser}/>
+          <LoadingBar />
           <Routes>
             {/* <Route path="/" element={<LandingPage />} /> */}
             <Route path="/" element={<Navigate to="/auth" />} />
@@ -28,8 +48,8 @@ const App = () => {
             <Route path="/profile" element={<Profile user={user} setUser={setUser}/>} />
             <Route path="/account" element={<Account user={user} setUser={setUser}/>} />
           </Routes>
-        
-        {/* </Container> */}
+          <Footer />
+        </Container>
       </BrowserRouter>
     
   );
