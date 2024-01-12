@@ -68,15 +68,19 @@ const Profile = ({ user, setUser }) => {
 
             <div style={{marginTop: "40px" }} >
                 {(!posts.length && !isLoading) ? 'No Posts': (
-                    isLoading ? <CircularProgress /> : (
-                        <Grid container alignItems='stretch' spacing={3}>
-                          {posts.map((post) => (
-                            <Grid key={post._id} item xs={12} sm={12} md={6} lg={4}>
-                              <Post1 post={post}/>
-                            </Grid>
-                          ))}
-                        </Grid>
-                      )
+                    isLoading ? (
+                      <div style={{display: 'flex', justifyContent: 'center'}}>
+                        <CircularProgress />
+                      </div>
+                    ) : (
+                      <Grid container alignItems='stretch' spacing={3}>
+                        {posts.map((post) => (
+                          <Grid key={post._id} item xs={12} sm={12} md={6} lg={4}>
+                            <Post1 post={post}/>
+                          </Grid>
+                        ))}
+                      </Grid>
+                    )
                 )}
             </div>
             

@@ -33,36 +33,22 @@ const Home = ({ user, setUser }) => {
       setIsSmallScreen(window.innerWidth < 600);
     };
 
-    // Initial check on mount
     handleResize();
 
-    // Add event listener for window resize
     window.addEventListener('resize', handleResize);
 
-    // Cleanup the event listener when the component unmounts
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-
   const handleKeyPress = (e) => {
     // e.preventDefault();
     if(e.keyCode===13) {
       // key code 13 is for enter key
-      //search post
       searchPost();
     }
   }
-
-  // const handleAdd = (tag) => {
-  //   setTags([...tags, tag]);
-  // }
-
-  // const handleDelete = (tagToDelete) => {
-  //   setTags(tags.filter((tag) => tag!==tagToDelete));
-  // }
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
@@ -79,7 +65,7 @@ const Home = ({ user, setUser }) => {
     if(search.trim() || tags) {
       // console.log(tags);
       dispatch(getPostsBySearch({search, tags}));
-      // navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags || 'none'}`);
+      navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags || 'none'}`);
     }
     else {
       navigate('/posts');
@@ -125,7 +111,7 @@ const Home = ({ user, setUser }) => {
 
   return (
     <Grow in>
-        <Container maxWidth="xl" style={{paddingBottom: "20px", marginTop: '25px', minHeight: '100vh'}}>
+        <Container maxWidth="xl" style={{paddingBottom: "20px", marginTop: '25px', minHeight: '100vh', paddingLeft: isSmallScreen?'12px':'24px', paddingRight: isSmallScreen?'12px':'24px' }}>
           <Grid container style={{flexDirection: flexDirection}} className={classes.gridContainer} justifyContent="space-between" alignItems="stretch" spacing={3}>
             <Grid item xs={12} sm={6} md={9}>
               <Posts setCurrentId={setCurrentId} user={user} setUser={setUser} />
@@ -152,19 +138,9 @@ const Home = ({ user, setUser }) => {
                   value={tags}
                   onChange={handleInputChange}
                 />
-                {/* <ChipInput className={classes.inputField}
-                  style={{margin: '10px 0'}}
-                  value = {tags}
-                  onAdd={handleAdd}
-                  onDelete={handleDelete}
-                  label="Search Tags"
-                  variant="outlined"
-                /> */}
                 <Button onClick={searchPost} className={classes.searchButton} variant="contained" style={searchButtonStyles()}>Search</Button>
               </AppBar>
               <Form currentId={currentId} setCurrentId={setCurrentId}/>
-
-              
             </Grid>
           </Grid>
           {(!searchQuery && !tags.length) && (

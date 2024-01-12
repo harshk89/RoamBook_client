@@ -3,7 +3,8 @@ import { Container, Typography, Divider, Button, TextField, Alert } from '@mui/m
 // import { Grid } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux'
 import { editDetails, updatePassword } from '../../actions/auth';
-import { resetPassStatus } from '../../actions/auth';
+import { resetChangeStatus } from '../../actions/auth';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 import useStyles from './styles';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const Account = ({ user, setUser }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const { passChangeStatus } = useSelector((state) => state.authReducer);
+    const { changeStatus } = useSelector((state) => state.authReducer);
     // const { authData } = useSelector((state) => state.authReducer);
     // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const { theme } = useSelector((state) => state.posts);
@@ -20,6 +21,7 @@ const Account = ({ user, setUser }) => {
         lastName: user?.result?.name.split(' ')[1],
         email: user?.result?.email
     });
+    const [loading, setLoading] = useState(false);
     const [editEnabled, setEditEnabled] = useState(false);
     const [password, setPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -39,14 +41,15 @@ const Account = ({ user, setUser }) => {
 
     const handleEdit = (e) => {
         e.preventDefault();
-        dispatch(editDetails(userDetails, navigate, setUser));
-        setEditEnabled(false);
+        setLoading(true);
+        dispatch(editDetails(userDetails, setUser, setEditEnabled, setLoading ));
     }
 
     const handleUpdatePass = (e) => {
         e.preventDefault();
+        setLoading(true);
         const data = {password,newPassword};
-        dispatch(updatePassword(data, setUser, clear));
+        dispatch(updatePassword(data, setUser, clear, setLoading));
     }
 
     const mainContainerStyles = {
@@ -78,8 +81,8 @@ const Account = ({ user, setUser }) => {
                     <TextField id="filled-read-only-input" variant="filled" size="small" InputProps={{readOnly: true}} className={classes.textField} style={{color: 'green', marginTop: '10px'}} value={userDetails.email} />
                 </div>
                 {user?.result?.name===(userDetails.firstName+" "+userDetails.lastName) ? (
-                <Button disabled variant="contained" sx={{marginTop: "20px", marginBottom: "20px"}}>Submit</Button>) : (
-                <Button variant="contained" type="submit" sx={{marginTop: "20px", marginBottom: "20px"}}>Submit</Button>
+                    <LoadingButton disabled size="large" type="submit" loading={loading} variant="contained" style={{marginTop: "20px", marginBottom: "20px"}}>Submit</LoadingButton>) : (
+                    <LoadingButton size="large" type="submit" loading={loading} variant="contained" style={{marginTop: "20px", marginBottom: "20px"}}>Submit</LoadingButton>
                 )}
             </form>
             ) : (<>
@@ -89,28 +92,30 @@ const Account = ({ user, setUser }) => {
                 <Button variant="contained" onClick={()=>setEditEnabled(true)} sx={{marginTop: "20px", marginBottom: "20px"}}>Update Details</Button>
                 </>
             )}
+            {(changeStatus==="details-change-success") && (<Alert onClose={()=>{dispatch(resetChangeStatus())}} severity="success">Details updated!</Alert>)}
+            {(changeStatus==="details-change-failed") && (<Alert onClose={()=>{dispatch(resetChangeStatus())}} severity="error">Details not updated! - Something went wrong</Alert>)}
             <Divider />
             <form className={classes.changePass} style={{margin: '8px'}} onSubmit={handleUpdatePass}>
                 <div className={classes.userDetail} style={{display: 'flex', alignItems: 'center'}} >
                     <Typography variant="body1" gutterBottom sx={{width: "180px"}}>Current Password:</Typography>
-                    <TextField id="filled-basic" variant="filled" size="small" type='password' className={classes.textField} style={{color: 'green', marginTop: '10px'}} value={password} onChange={(e)=>setPassword(e.target.value)} />
+                    <TextField variant="filled" size="small" type='password' className={classes.textField} style={{color: 'green', marginTop: '10px'}} value={password} onChange={(e)=>setPassword(e.target.value)} />
                 </div>
                 <div className={classes.userDetail} style={{display: 'flex', alignItems: 'center'}} >
                     <Typography variant="body1" gutterBottom sx={{width: "180px"}}>New Password:</Typography>
-                    <TextField id="filled-basic" variant="filled" size="small" type='password' className={classes.textField} style={{color: 'green', marginTop: '10px'}} value={newPassword} onChange={(e)=>setNewPassword(e.target.value)} />
+                    <TextField variant="filled" size="small" type='password' className={classes.textField} style={{color: 'green', marginTop: '10px'}} value={newPassword} onChange={(e)=>setNewPassword(e.target.value)} />
                 </div>
                 <div className={classes.userDetail} style={{display: 'flex', alignItems: 'center'}} >
                     <Typography variant="body1" gutterBottom sx={{width: "180px"}}>Confirm New Password:</Typography>
-                    {newPassword===confirmPassword ? (<TextField id="filled-basic" variant="filled" size="small" type='password' className={classes.textField} style={{color: 'green', marginTop: '10px'}} value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)} />) : 
-                    (<TextField error id="filled-basic" variant="filled" size="small" type='password' className={classes.textField} style={{color: 'green', marginTop: '10px'}} value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)} />)}
+                    {newPassword===confirmPassword ? (<TextField variant="filled" size="small" type='password' className={classes.textField} style={{color: 'green', marginTop: '10px'}} value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)} />) : 
+                    (<TextField error variant="filled" size="small" type='password' className={classes.textField} style={{color: 'green', marginTop: '10px'}} value={confirmPassword} onChange={(e)=>setConfirmPassword(e.target.value)} />)}
                 </div>
                 {(password && newPassword.length>=5 && newPassword===confirmPassword) ? (
-                <Button variant="contained" type="submit" sx={{marginTop: "20px", marginBottom: "20px"}}>Update Password</Button>) : (
-                <Button disabled variant="contained" sx={{marginTop: "20px", marginBottom: "20px"}}>Update Password</Button>
+                    <LoadingButton size="large" type="submit" loading={loading} variant="contained" style={{marginTop: "20px", marginBottom: "20px"}}>Update Password</LoadingButton>) : (
+                    <LoadingButton disabled size="large" type="submit" loading={loading} variant="contained" style={{marginTop: "20px", marginBottom: "20px"}}>Update Password</LoadingButton>
                 )}
             </form>
-            {(passChangeStatus==="successful") && (<Alert onClose={()=>{dispatch(resetPassStatus())}} severity="success">Password successfully change!</Alert>)}
-            {(passChangeStatus==="failed") && (<Alert onClose={()=>{dispatch(resetPassStatus())}} severity="error">Password not changed - incorrect password!</Alert>)}
+            {(changeStatus==="pass-change-success") && (<Alert onClose={()=>{dispatch(resetChangeStatus())}} severity="success">Password successfully change!</Alert>)}
+            {(changeStatus==="pass-change-failed") && (<Alert onClose={()=>{dispatch(resetChangeStatus())}} severity="error">Password not changed - incorrect password!</Alert>)}
 
         </Container>
     )

@@ -20,6 +20,7 @@ const PostDetails = () => {
   }, [id]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if(post) {
       dispatch(getPostsBySearch({search: 'none', tags: post?.tags.join(',')}));
     }
@@ -33,6 +34,7 @@ const PostDetails = () => {
 
   const [windowSize, setWindowSize] = useState(window.innerWidth);
   const flexDirection = windowSize < 600 ? 'column' : 'row';
+  const paperPadding = windowSize < 600 ? '8px' : '20px';
   useEffect(() => {
     const handleResize = () => {
       setWindowSize(window.innerWidth);
@@ -50,7 +52,7 @@ const PostDetails = () => {
         background: "#f2f2f2",
         minHeight: '100vh',
         margin: "auto",
-        padding: '20px',
+        padding: paperPadding,
         maxWidth: "1000px",
         borderRadius: '0px',
         borderLeft: '1px solid #dadada',
@@ -59,7 +61,7 @@ const PostDetails = () => {
         background: "#323232",
         minHeight: '100vh',
         margin: "auto",
-        padding: '20px',
+        padding: paperPadding,
         maxWidth: "1000px",
         borderRadius: '0px',
         borderLeft: '1px solid #4c4c4c',
@@ -75,7 +77,7 @@ const PostDetails = () => {
         minHeight: '100vh',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
+        paddingTop: '50px',
         margin: 'auto',
         borderRadius: '0px',
         maxWidth: "1000px",
@@ -86,7 +88,7 @@ const PostDetails = () => {
         minHeight: '100vh',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
+        paddingTop: '50px',
         margin: 'auto',
         borderRadius: '0px',
         maxWidth: "1000px",
@@ -106,6 +108,7 @@ const PostDetails = () => {
   const cardStyles = {
     flexWrap: 'wrap',
     flexDirection: 'column',
+    padding: '0px'
   }
   const sectionStyles = {
     borderRadius: '20px',
@@ -127,7 +130,7 @@ const PostDetails = () => {
 
   if(isLoading) {
     return (<Paper elevation={6} className={classes.loadingPaper} style={loadingPaperStyles()}>
-      <CircularProgress size='7em'/>
+      <CircularProgress/>
     </Paper>)
   }
 

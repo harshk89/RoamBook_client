@@ -52,6 +52,7 @@ const Auth = ({ user, setUser }) => {
             setWrongConfirmPassErr('Confirm pass does not match!');
         }
     } else {
+        setLoading(true);
         dispatch(signin(formData, setWrongPassErr, setLoading, navigate, setUser));
     }
   }

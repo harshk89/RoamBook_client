@@ -71,8 +71,8 @@ const Navbar1 = ({user, setUser}) => {
 
     return (
         <AppBar position="sticky" style={appBarStyles()} >
-            <div maxWidth="false" style={{display: "flex", justifyContent: "space-between", margin: "auto 30px"}} >
-                <Link to='/'><img src={roambook_logo} alt="roambook" height="60px" /></Link>
+            <div style={{display: "flex", justifyContent: "space-between", margin: "auto 10px"}} >
+                <Link to='/posts'><img src={roambook_logo} alt="roambook" height="60px" /></Link>
                 <div style={{display: "flex"}}>
                     {user ? (
                         <Box sx={{ flexGrow: 0, margin: 'auto 0' }}>
@@ -97,7 +97,7 @@ const Navbar1 = ({user, setUser}) => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                             >
-                                <MenuItem sx={{width: "100%" }} component={Link} to='/' onClick={handleCloseUserMenu}>
+                                <MenuItem sx={{width: "100%" }} component={Link} to='/posts' onClick={handleCloseUserMenu}>
                                     <Typography textAlign="center">Home</Typography>
                                 </MenuItem>
                                 <MenuItem sx={{width: "100%" }} component={Link} to='/profile' onClick={handleCloseUserMenu}>
@@ -112,9 +112,9 @@ const Navbar1 = ({user, setUser}) => {
                             </Menu>
                         </Box>
                     ) : (
-                        <Button style={{ margin: "8px 0px" }} component={Link} to="/auth" variant="contained" color="primary">Sign In</Button>
-                    )}&nbsp;&nbsp;&nbsp;
-                    <IconButton aria-label="delete" onClick={handleThemeChange}>
+                        <Button style={{ margin: "10px 0px", width: '75px', padding: '0px', borderRadius: '5px' }} component={Link} to="/auth" variant="contained" color="primary">Sign In</Button>
+                    )}
+                    <IconButton aria-label="delete" onClick={handleThemeChange} style={{width: '50px'}}>
                         <Brightness4Icon sx={{color: '#e5e5e5'}} />
                     </IconButton>
                 </div>

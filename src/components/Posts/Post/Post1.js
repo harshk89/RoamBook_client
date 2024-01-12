@@ -12,7 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { pink, red } from '@mui/material/colors';
 import useStyles from './styles1.js'
 
-const Post1 = ({ post, setCurrentId, user, setUser }) => {
+const Post1 = ({ post, setCurrentId, user, setUser, setSignInAlert }) => {
     const classes = useStyles();
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -24,12 +24,17 @@ const Post1 = ({ post, setCurrentId, user, setUser }) => {
     const userId = user?.result?._id;
   
     const handleLike = async() => {
-        dispatch(likePost(post._id));
-        if(post.likes.find((id) => id === (userId))) {
-            setLikes(post.likes.filter((id) => id !== (userId)));
-        } else {
-            setLikes([ ...post.likes, userId]);
-        };
+        if(!user?.result) {
+            setSignInAlert(true);
+        }
+        else {
+            dispatch(likePost(post._id));
+            if(post.likes.find((id) => id === (userId))) {
+                setLikes(post.likes.filter((id) => id !== (userId)));
+            } else {
+                setLikes([ ...post.likes, userId]);
+            };
+        }
     }
 
     const Likes = () => {
@@ -131,7 +136,8 @@ const Post1 = ({ post, setCurrentId, user, setUser }) => {
             </CardContent>
             <Divider sx={{marginLeft: "10px", marginRight: "10px", marginBottom: '-6px'}} />
             <CardActions className={classes.cardActions} style={cardActionsStyles}>
-                <IconButton aria-label="Like" disabled={!user?.result} onClick={handleLike}>
+                {/* <IconButton aria-label="Like" disabled={!user?.result} onClick={handleLike}> */}
+                <IconButton aria-label="Like" onClick={handleLike}>
                     <Likes />
                 </IconButton>
                 {(user?.result?._id === post?.creator) && (

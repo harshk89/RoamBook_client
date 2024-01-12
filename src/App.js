@@ -7,10 +7,9 @@ import PostDetails from './components/PostDetails/PostDetails';
 import Navbar1 from './components/Navbar/Navbar1';
 import Profile from './components/Profile/Profile';
 import Account from './components/Account/Account';
-import LoadingBar from './components/LoadingBar/LoadingBar';
+// import LoadingBar from './components/LoadingBar/LoadingBar';
 import { useSelector } from 'react-redux';
 import Footer from './components/Footer/Footer';
-// import LandingPage from './components/LandingPage/LandingPage';
 
 const App = () => {
   // const user = useSelector((state) => state.authReducer.authData);
